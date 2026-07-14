@@ -1,4 +1,16 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(git status:*)",
+      "Bash(git status)",
+      "Bash(git diff:*)",
+      "Bash(git diff)",
+      "Bash(git log:*)",
+      "Bash(git log)",
+      "Bash(git remote -v)",
+      "Bash(git show:*)"
+    ]
+  },
   "hooks": {
     "PreToolUse": [
       {
@@ -7,6 +19,24 @@
           {
             "type": "command",
             "command": "bash .claude/hooks/guard-secrets.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/guard-scope.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/guard-git-commit.sh"
           }
         ]
       }

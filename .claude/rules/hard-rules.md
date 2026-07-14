@@ -19,8 +19,21 @@
 - PC 개발자도구의 모바일 뷰로 확인했을 때 화면 폭이 좁아져도 옵션 UI 레이아웃이 깨지지 않아야 한다.
 - 골라담기 UI에서의 선택은 카페24 기본 텍스트버튼 옵션의 선택 상태·구매 흐름과 항상 함께 갱신되어야 한다(동기화, 재구현 아님).
 
+## 🎨 피그마 시안 관련
+- 피그마는 **스타일 참고용**이다 (카드 간격, 색상, 선택 상태 표시, 모바일 배치 등). 시안을 최대한 재현하려는 시도가 위 절대 금지 항목(스코프, DOM 보존 등)을 어기는 근거가 될 수 없다 — 충돌하면 항상 하드 룰이 이긴다.
+- 시안에서 가져온 색상·간격·문구 등은 하드코딩하지 말고 요구사항 #8에 맞춰 설정 JS 값으로 분리한다.
+
 ## 이 규칙을 참조해야 하는 시점
 - `detail.html` 또는 옵션 설정 JS/CSS를 Edit/Write 하기 전
 - `git commit`/`git push` 하기 전 (`/cafe24-review`, `/cafe24-commit` 스킬이 이 파일을 기준으로 검사한다)
 - `/cafe24-qa`로 체크리스트 점검할 때
 - `cafe24-option-picker` 에이전트가 구현/리뷰 작업을 시작할 때
+- `cafe24-rule-auditor` 에이전트가 독립적으로 감사할 때
+
+## 강제 수단 요약
+| 규칙 | 강제 수단 |
+|---|---|
+| 민감정보 금지 | `.claude/hooks/guard-secrets.sh` (Write/Edit 시), `guard-git-commit.sh` (git commit 시) |
+| 필수 DOM 보존 | `.claude/hooks/check-required-dom.sh` (detail.html Write/Edit 후), `guard-git-commit.sh` (git commit 시) |
+| 옵션 외 영역 수정 금지 | `.claude/hooks/guard-scope.sh` (detail.html Edit 시, 금지 구역 old_string 감지) |
+| 나머지 (재구현 금지, suffix 규칙, 모바일 겹침 등) | 강제 hook 없음 — `/cafe24-qa`, `/cafe24-review`, `cafe24-rule-auditor`로 사람/에이전트가 매번 재확인 |
