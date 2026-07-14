@@ -1,0 +1,270 @@
+/*
+ * 골라담기 커스텀 옵션 UI 스타일
+ * 값 출처: .claude/design/figma-style-tokens.md (피그마 시안에서 추출한 색상/타이포/spacing)
+ * 이 파일은 옵션 영역 전용이며, 그 외 상세페이지 영역에는 영향을 주지 않는다.
+ */
+
+.optionPicker {
+    margin: 16px 0;
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Malgun Gothic", sans-serif;
+    color: #171717;
+}
+
+/* 카페24 기본 텍스트버튼 옵션(select)은 삭제하지 않고 이 클래스로만 시각적으로 숨긴다 */
+.optionPickerNativeRow {
+    display: none !important;
+}
+
+.optionPicker__header {
+    height: 44px;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    background: #f4f4f4;
+    border-radius: 4px 4px 0 0;
+}
+
+.optionPicker__title {
+    font-size: 14px;
+    font-weight: 500;
+    color: #525252;
+}
+
+.optionPicker__subtitle {
+    margin-left: 6px;
+    font-size: 12px;
+    color: #777777;
+}
+
+.optionPicker__list {
+    border: 1px solid #ededed;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    overflow: hidden;
+}
+
+.optionPicker__empty {
+    padding: 16px 12px;
+    font-size: 13px;
+    color: #777777;
+}
+
+.optionPicker__card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 12px;
+    background: #ffffff;
+    border-bottom: 1px solid #ededed;
+}
+
+.optionPicker__card:last-child {
+    border-bottom: none;
+}
+
+.optionPicker__card--selected {
+    background: #fff1eb;
+}
+
+.optionPicker__card--disabled {
+    background: #ededed;
+}
+
+.optionPicker__card--disabled .optionPicker__label,
+.optionPicker__card--disabled .optionPicker__price,
+.optionPicker__card--disabled .optionPicker__unitPrice,
+.optionPicker__card--disabled .optionPicker__limit {
+    color: #a1a1a1;
+}
+
+.optionPicker__cardMain {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.optionPicker__count {
+    flex: 0 0 auto;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid #e5e5e5;
+    font-size: 11px;
+    font-weight: 600;
+    color: #a1a1a1;
+    background: #ffffff;
+}
+
+.optionPicker__card--selected .optionPicker__count {
+    border-color: #ff692e;
+    background: #ff692e;
+    color: #ffffff;
+}
+
+.optionPicker__info {
+    min-width: 0;
+}
+
+.optionPicker__labelRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.optionPicker__label {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.48px;
+    color: #171717;
+}
+
+.optionPicker__card--selected .optionPicker__label {
+    color: #ff692e;
+}
+
+.optionPicker__badge {
+    display: inline-block;
+    padding: 4px;
+    border-radius: 2px;
+    font-size: 12px;
+    font-weight: 600;
+    background: #fff1eb;
+    color: #ff692e;
+    white-space: nowrap;
+}
+
+.optionPicker__badge--strong {
+    background: #ffebeb;
+    color: #eb0004;
+}
+
+.optionPicker__desc {
+    margin-top: 2px;
+    font-size: 12px;
+    color: #777777;
+}
+
+.optionPicker__price {
+    margin-top: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #171717;
+}
+
+.optionPicker__card--selected .optionPicker__price {
+    color: #ff692e;
+}
+
+.optionPicker__unitPrice {
+    margin-left: 4px;
+    font-size: 12px;
+    font-weight: 400;
+    color: #777777;
+}
+
+.optionPicker__limit {
+    margin-top: 2px;
+    font-size: 12px;
+    color: #777777;
+}
+
+.optionPicker__limit--reached {
+    color: #eb0004;
+}
+
+.optionPicker__stepper {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: stretch;
+    border: 1px solid #d4d4d4;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.optionPicker__btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: #ffffff;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    color: #171717;
+}
+
+.optionPicker__btn:disabled {
+    background: #e5e5e5;
+    color: #a1a1a1;
+    cursor: not-allowed;
+}
+
+.optionPicker__btn--remove {
+    border-right: 1px solid #d4d4d4;
+}
+
+.optionPicker__btn--add {
+    border-left: 1px solid #d4d4d4;
+}
+
+.optionPicker__qty {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+    background: #ededed;
+}
+
+.optionPicker__status {
+    margin-top: 8px;
+    padding: 0 2px;
+    font-size: 12px;
+    color: #777777;
+    min-height: 16px;
+}
+
+.optionPicker__status--reached {
+    color: #eb0004;
+}
+
+/* 모바일: 카드 세로 배치, 버튼/터치 영역이 하단 구매 버튼 영역과 겹치지 않도록
+   position은 항상 inline 문서 흐름을 사용하고 fixed/모달을 쓰지 않는다. */
+@media (max-width: 480px) {
+    .optionPicker__card {
+        gap: 12px;
+        padding: 12px 10px;
+    }
+
+    .optionPicker__cardMain {
+        gap: 8px;
+    }
+
+    .optionPicker__label {
+        font-size: 15px;
+    }
+
+    .optionPicker__desc,
+    .optionPicker__price,
+    .optionPicker__limit {
+        font-size: 11px;
+    }
+
+    .optionPicker__badge {
+        font-size: 11px;
+    }
+
+    .optionPicker__stepper {
+        flex-shrink: 0;
+    }
+}

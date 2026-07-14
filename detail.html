@@ -166,7 +166,7 @@
                 -->
                 <caption>상품 옵션</caption>
                 <tbody module="product_option">
-                <tr>
+                <tr class="optionPickerNativeRow">
                     <th scope="row">{$option_name}</th>
                     <td>{$form.option}<p class="value">{$option_desc}</p></td>
                 </tr>
@@ -196,6 +196,14 @@
                 </tr>
                 </tbody>
             </table>
+
+            <!--@css(/css/module/product/option-picker.css)-->
+            <!-- 골라담기 커스텀 옵션 UI: 위 product_option 테이블의 네이티브 select를
+                 대신 조작하는 방식으로 동작한다(재구현 아님). 뱃지/설명/추천문구/
+                 가격표시는 option-picker.config.js에서 관리한다. -->
+            <div class="optionPicker" id="optionPicker"></div>
+            <!--@js(/js/module/product/option-picker.config.js)-->
+            <!--@js(/js/module/product/option-picker.js)-->
 
             <dl module="product_quantity" class="ec-base-desc quantity">
                 <dt>수량</dt>
