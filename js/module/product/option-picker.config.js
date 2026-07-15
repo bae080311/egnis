@@ -29,38 +29,36 @@ window.OptionPickerConfig = {
         soldOutLabel: "품절",
         unitPriceLabel: function (unitPrice) {
             return "개당 " + unitPrice.toLocaleString() + "원";
+        },
+        totalCountLabel: function (count) {
+            return count + "개";
         }
     },
 
     tiers: {
         "10개입": {
             badge: null,
-            description: "가볍게 시작하기 좋아요",
-            recommend: false
+            description: "가볍게 시작하기 좋아요"
         },
         "30개입": {
             badge: "가장 많이 담아요",
             badgeStrong: false,
-            description: "2주 분량으로 넉넉해요",
-            recommend: true
+            description: "2주 분량으로 넉넉해요"
         },
         "50개입": {
             badge: null,
-            description: "한 달 분량, 든든하게",
-            recommend: false
+            description: "한 달 분량, 든든하게"
         },
         "100개입": {
             badge: "최대 할인",
             badgeStrong: true,
-            description: "가장 알뜰한 구성이에요",
-            recommend: false
+            description: "가장 알뜰한 구성이에요"
         }
     },
 
     defaultTier: {
         badge: null,
         badgeStrong: false,
-        description: "",
-        recommend: false
+        description: ""
     }
 };

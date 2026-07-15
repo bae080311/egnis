@@ -10,8 +10,48 @@
     color: #171717;
 }
 
-/* 카페24 기본 텍스트버튼 옵션(select)은 삭제하지 않고 이 클래스로만 시각적으로 숨긴다 */
+/*
+ * 카페24 기본 텍스트버튼 옵션(select + ul.ec-product-button)은 삭제하지 않고
+ * 이 클래스로만 시각적으로 숨긴다. display:none을 쓰지 않는 이유는, 카페24의
+ * "선택 상품 목록에 담기" 클릭 핸들러가 요소의 실제 노출 여부(치수가 0인지)를
+ * 확인하는 것으로 실제 테스트몰에서 확인했기 때문이다 — display:none이면 이
+ * 핸들러가 반응하지 않아서, 담기/빼기 클릭마다 잠깐 보였다 숨었다 하는 방식을
+ * 처음엔 썼는데 그게 화면 깜빡임으로 보였다. 대신 치수(1px×1px)는 남기고
+ * 화면에서만 잘라내는("sr-only") 방식으로 바꿔서, 클릭은 항상 정상 처리되고
+ * 화면에는 아예 안 보이며 별도의 보임/숨김 전환도 필요 없다.
+ */
 .optionPickerNativeRow {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+/*
+ * "선택 상품 목록"(카페24가 담을 때마다 자동 생성하는 tbody.option_products)
+ * 자체는 삭제/재구현하지 않고 그대로 둔다 — 삭제(×) 버튼도 그대로 둬서
+ * 카드의 "빼기"와 같은 방식으로 계속 동작한다. 다만 각 줄의 수량 증감
+ * 컨트롤은 숨긴다: 그 컨트롤로 수량을 직접 늘리면 카드가 세는 "담은 횟수"
+ * (suffix 개수 기준 최대 추가 가능 횟수)와 실제 구매 수량이 어긋나게 된다
+ * (예: "10개입" 카드는 1/2로 보이는데 실제로는 그 줄 수량을 5로 올려버리는
+ * 식). 담기/빼기는 항상 카드로만 하도록 만들어 하드 룰(suffix 기준 횟수 제한)
+ * 을 우회하는 통로를 막는다. DOM/이벤트 자체는 삭제하지 않고 CSS로만 숨긴다.
+ *
+ * PC는 이 컨트롤을 <span class="quantity">로 감싸지만 모바일 스킨은 감싸는
+ * 클래스 없이 <p> 안에 바로 두는 걸 실제 확인했다 — 감싸는 요소 대신 실제
+ * 컨트롤 3개(입력창 .quantity_opt, 증가 .eProductQuantityUpClass, 감소
+ * .eProductQuantityDownClass)를 직접 지정해서 PC/모바일 마크업 차이와 무관하게
+ * 항상 걸리게 한다.
+ */
+.option_products .quantity,
+.option_products .quantity_opt,
+.option_products .eProductQuantityUpClass,
+.option_products .eProductQuantityDownClass {
     display: none !important;
 }
 
@@ -39,8 +79,38 @@
 .optionPicker__list {
     border: 1px solid #ededed;
     border-top: none;
-    border-radius: 0 0 4px 4px;
     overflow: hidden;
+}
+
+/*
+ * 피그마 시안의 "총 수량" 요약 바(하단 정보 바) — 카드 목록 밑에 전체 담은
+ * 개수를 보여준다. 시안에는 이 아래에 "선택완료" 버튼도 있지만 그건 가져오지
+ * 않는다 — 카페24의 바로구매/장바구니 버튼이 이미 그 역할을 하고, 새 버튼을
+ * 추가하면 구매 버튼 영역과 중복/혼동될 수 있어서다(하드 룰: 구매 버튼 외형
+ * 수정 금지 — 새 구매류 버튼 추가도 같은 취지로 피한다). 목록의 아래쪽 모서리
+ * 둥글림을 이 바가 이어받는다(목록 뒤에 오는 마지막 요소라서).
+ */
+.optionPicker__footer {
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 14px;
+    background: #ffffff;
+    border: 1px solid #ededed;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+}
+
+.optionPicker__footerLabel {
+    font-size: 14px;
+    color: #525252;
+}
+
+.optionPicker__footerCount {
+    font-size: 14px;
+    font-weight: 600;
+    color: #ff692e;
 }
 
 .optionPicker__empty {
@@ -161,6 +231,11 @@
     color: #ff692e;
 }
 
+/* 피그마 시안처럼 가격 숫자는 SemiBold(부모 기본값), "원"만 Regular로 낮춘다. */
+.optionPicker__priceWon {
+    font-weight: 400;
+}
+
 .optionPicker__unitPrice {
     margin-left: 4px;
     font-size: 12px;
@@ -266,5 +341,14 @@
 
     .optionPicker__stepper {
         flex-shrink: 0;
+    }
+
+    .optionPicker__footer {
+        padding: 0 10px;
+    }
+
+    .optionPicker__footerLabel,
+    .optionPicker__footerCount {
+        font-size: 12px;
     }
 }
