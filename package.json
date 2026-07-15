@@ -1,0 +1,22 @@
+{
+  "name": "cafe24-option-picker",
+  "private": true,
+  "description": "카페24 골라담기 옵션 UI 과제 — 순수 로직 유닛 테스트 (별도 의존성 없음, Node 내장 test runner만 사용). 배포 자동화(cafe24:*)만 devDependency로 playwright를 쓴다.",
+  "scripts": {
+    "test": "node --test test/option-picker.test.js",
+    "build:inline": "node scripts/build-inline.js",
+    "cafe24:record": "node scripts/cafe24-record.js",
+    "cafe24:deploy": "npm run build:inline && node scripts/cafe24-deploy.js",
+    "cafe24:deploy:headed": "npm run build:inline && node scripts/cafe24-deploy.js --headed",
+    "cafe24:deploy:dry-run": "npm run build:inline && node scripts/cafe24-deploy.js --headed --dry-run",
+    "cafe24:deploy:mobile": "npm run build:inline && node scripts/cafe24-deploy.js --mobile",
+    "cafe24:deploy:mobile:headed": "npm run build:inline && node scripts/cafe24-deploy.js --mobile --headed",
+    "cafe24:qa:mobile": "node scripts/cafe24-qa-mobile.js",
+    "cafe24:qa:interaction": "node scripts/cafe24-qa-interaction.js",
+    "cafe24:verify": "node scripts/cafe24-verify-all.js",
+    "preview": "open preview/mock-cafe24.html"
+  },
+  "devDependencies": {
+    "playwright": "^1.48.0"
+  }
+}
