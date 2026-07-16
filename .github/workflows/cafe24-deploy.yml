@@ -1,0 +1,72 @@
+name: Cafe24 test-mall deploy
+
+# CI(test job)는 push/PR마다 자동 실행된다. deploy job은 test를 통과해야만
+# 시작되고, 그다음 "cafe24-test" GitHub Environment에 등록해둔 필수 리뷰어가
+# 승인해야 실제로 실행된다(승인 없이는 대기 상태로 멈춰있다) — 이 저장소
+# 파일만으로는 그 승인 규칙 자체를 설정할 수 없어서, 아래 "최초 1회 설정"을
+# 저장소 관리자가 GitHub 웹에서 직접 해야 한다.
+#
+# ## 최초 1회 설정 (GitHub 저장소 Settings에서, 이 파일로는 할 수 없음)
+#   1. Settings > Environments > New environment, 이름을 정확히 "cafe24-test"로 생성
+#   2. 그 environment의 "Deployment protection rules" > "Required reviewers"에
+#      승인 권한을 줄 사람(본인 포함) 추가
+#   3. 같은 environment 화면의 "Environment secrets"에 아래 3개 추가:
+#      CAFE24_MALL_ID, CAFE24_ADMIN_ID, CAFE24_ADMIN_PW
+#      (repository secret이 아니라 이 environment 전용 secret으로 넣어야
+#      cafe24-test environment를 쓰는 job에서만 노출된다)
+#
+# 이렇게 해두면: main에 push → test 자동 실행 → deploy job이 "대기 중"으로
+# 뜨고 → 승인자가 Actions 탭에서 승인 버튼을 눌러야 실제 배포가 시작된다.
+on:
+  push:
+    branches: [main]
+  pull_request: {}
+  workflow_dispatch: {}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm test
+
+  deploy:
+    needs: test
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    environment: cafe24-test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - run: npx playwright install --with-deps chromium
+      - name: Build inline HTML (PC + 모바일)
+        run: npm run build:inline
+      - name: Deploy PC 스킨
+        env:
+          CAFE24_MALL_ID: ${{ secrets.CAFE24_MALL_ID }}
+          CAFE24_ADMIN_ID: ${{ secrets.CAFE24_ADMIN_ID }}
+          CAFE24_ADMIN_PW: ${{ secrets.CAFE24_ADMIN_PW }}
+        run: node scripts/cafe24-deploy.js --yes
+      - name: Deploy 모바일 스킨
+        env:
+          CAFE24_MALL_ID: ${{ secrets.CAFE24_MALL_ID }}
+          CAFE24_ADMIN_ID: ${{ secrets.CAFE24_ADMIN_ID }}
+          CAFE24_ADMIN_PW: ${{ secrets.CAFE24_ADMIN_PW }}
+        run: node scripts/cafe24-deploy.js --mobile --yes
+      - name: 스토어프론트 회귀 검증 (PC+모바일 병렬)
+        env:
+          CAFE24_MALL_ID: ${{ secrets.CAFE24_MALL_ID }}
+        run: npm run cafe24:verify
+      - name: 실패 시 스크린샷 업로드
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cafe24-deploy-error
+          path: scripts/.cafe24-deploy-error.png
+          if-no-files-found: ignore
