@@ -43,6 +43,7 @@
         root: null,
         tiers: [], // [{ name, variants: [{value, text, suffix, priceText, disabled}] }]
         observer: null,
+        observedTable: null,
         pending: {} // { [tierName]: true } — 담기/빼기 클릭 후 카페24가 목록을 갱신할 때까지의 잠금
     };
 
@@ -224,25 +225,41 @@
 
         select.value = "";
         select.value = optionValue;
-        var evt = new Event("change", { bubbles: true });
+        var evt;
+        if (typeof Event === "function") {
+            evt = new Event("change", { bubbles: true });
+        } else {
+            evt = document.createEvent("Event");
+            evt.initEvent("change", true, true);
+        }
         select.dispatchEvent(evt);
+        if (typeof window !== "undefined" && window.jQuery) {
+            window.jQuery(select).trigger("change");
+        }
     }
 
     function rowMatchesVariant(rowText, variantText) {
         var idx = rowText.indexOf(variantText);
-        if (idx === -1) return false;
-        var before = rowText.charAt(idx - 1);
-        var after = rowText.charAt(idx + variantText.length);
-        var beforeOk = !before || !/[0-9]/.test(before);
-        var afterOk = !after || !/[0-9_]/.test(after);
-        return beforeOk && afterOk;
+        while (idx !== -1) {
+            var before = rowText.charAt(idx - 1);
+            var after = rowText.charAt(idx + variantText.length);
+            var beforeOk = !before || !/[0-9]/.test(before);
+            var afterOk = !after || !/[0-9_]/.test(after);
+            if (beforeOk && afterOk) {
+                return true;
+            }
+            idx = rowText.indexOf(variantText, idx + 1);
+        }
+        return false;
     }
 
     function findRowForVariant(listBody, variantText) {
         if (!listBody) return null;
         var rows = listBody.querySelectorAll("tr");
         for (var i = 0; i < rows.length; i++) {
-            if (rowMatchesVariant(rows[i].textContent, variantText)) {
+            var optionEl = rows[i].querySelector(".product span") || rows[i].querySelector("span");
+            var textToCheck = optionEl ? optionEl.textContent : rows[i].textContent;
+            if (rowMatchesVariant(textToCheck, variantText)) {
                 return rows[i];
             }
         }
@@ -264,6 +281,10 @@
     function recomputeUsage() {
         var listBody = findSelectedListBody();
         state.listBody = listBody;
+
+        if (listBody) {
+            observeSelectedList();
+        }
 
         state.tiers.forEach(function (tier) {
             tier.variants.forEach(function (variant) {
@@ -565,6 +586,13 @@
         var listBody = findSelectedListBody();
         if (!listBody) return;
 
+        // tbody 자체가 매 렌더링마다 교체될 수 있어, 목록 상위(테이블)까지 관찰한다.
+        var table = listBody.closest("table") || listBody;
+        // recomputeUsage()가 렌더마다 이 함수를 다시 부르므로, 같은 테이블이면
+        // disconnect/재관찰을 반복하지 않고 건너뛴다 — 테이블 자체가 교체된
+        // 경우에만(observedTable이 달라짐) 재연결한다(self-healing).
+        if (state.observedTable === table) return;
+
         if (state.observer) {
             state.observer.disconnect();
         }
@@ -576,9 +604,8 @@
             scheduleRender();
         });
 
-        // tbody 자체가 매 렌더링마다 교체될 수 있어, 목록 상위(테이블)까지 관찰한다.
-        var table = listBody.closest("table") || listBody;
         state.observer.observe(table, { childList: true, subtree: true });
+        state.observedTable = table;
     }
 
     var initialized = false;

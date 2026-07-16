@@ -158,6 +158,10 @@ test("rowMatchesVariant: 자릿수가 겹치는 다른 티어를 오매칭하지
     // 경계 체크(앞뒤가 숫자가 아님)가 없으면 오매칭될 위험이 있었다.
     assert.equal(rowMatchesVariant("담긴 옵션: 100개입_1 1개", "10개입_1"), false);
     assert.equal(rowMatchesVariant("담긴 옵션: 10개입_1 1개", "10개입_1"), true);
+    // 앞선 오매칭 후보(자릿수가 겹치는 다른 티어)가 문자열 앞쪽에 있어도,
+    // 뒤쪽에 실제로 경계 조건을 만족하는 매칭이 있으면 찾아내야 한다.
+    assert.equal(rowMatchesVariant("담긴 옵션: 10개입_10, 10개입_1", "10개입_1"), true);
+    assert.equal(rowMatchesVariant("담긴 옵션: 110개입_1, 10개입_1", "10개입_1"), true);
 });
 
 test("findOptionButtonLink: option_value가 일치하는 li의 a를 찾는다", () => {

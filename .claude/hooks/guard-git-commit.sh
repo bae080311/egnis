@@ -43,7 +43,7 @@ if echo "$staged_files" | grep -q 'detail\.html$'; then
     staged_content="$(git show ":${detail_path}" 2>/dev/null || true)"
     if [ -n "$staged_content" ]; then
         for token in "${required_tokens[@]}"; do
-            if ! echo "$staged_content" | grep -qF -- "$token"; then
+            if ! printf '%s\n' "$staged_content" | grep -qF -- "$token"; then
                 problems+=("스테이징된 '$detail_path'에서 필수 토큰 '$token'이 사라졌습니다.")
             fi
         done

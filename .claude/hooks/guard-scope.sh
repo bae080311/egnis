@@ -33,7 +33,7 @@ forbidden_markers=(
 
 hit=()
 for marker in "${forbidden_markers[@]}"; do
-    if echo "$old_string" | grep -qF -- "$marker"; then
+    if printf '%s\n' "$old_string" | grep -qF -- "$marker"; then
         hit+=("$marker")
     fi
 done
