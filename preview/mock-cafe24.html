@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<title>골라담기 옵션 UI — 로컬 목업 미리보기</title>
+<style>
+  body { font-family: -apple-system, "Malgun Gothic", sans-serif; max-width: 720px; margin: 40px auto; padding: 0 16px; }
+  .mockBanner { background: #fff3cd; border: 1px solid #ffe08a; padding: 12px 16px; border-radius: 8px; margin-bottom: 24px; font-size: 14px; line-height: 1.6; }
+  .mockBanner code { background: #00000010; padding: 1px 5px; border-radius: 4px; }
+  table.ec-base-table { border-collapse: collapse; width: 100%; }
+  table.ec-base-table caption { text-align: left; font-weight: bold; margin-bottom: 8px; }
+  .ec-product-button { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+  .ec-product-button li { border: 1px solid #ccc; border-radius: 4px; }
+  .ec-product-button li a { display: block; padding: 6px 10px; text-decoration: none; color: #333; font-size: 13px; }
+  .ec-product-button li.ec-product-selected { border-color: #333; background: #333; }
+  .ec-product-button li.ec-product-selected a { color: #fff; }
+  .displaynone { display: none; }
+  #mockSelectedList { margin-top: 24px; }
+  #mockSelectedList table { width: 100%; border-collapse: collapse; }
+  #mockSelectedList caption { text-align: left; font-weight: bold; margin-bottom: 8px; }
+  #mockSelectedList td { border-bottom: 1px solid #eee; padding: 8px 4px; font-size: 14px; }
+  .mockBuyArea { margin-top: 24px; display: flex; gap: 8px; }
+  .mockBuyArea a { flex: 1; text-align: center; padding: 12px; border: 1px solid #333; border-radius: 6px; text-decoration: none; color: #333; }
+  .mockBuyArea a.btnSubmit { background: #333; color: #fff; }
+  .eventLog { margin-top: 24px; font-size: 12px; color: #666; background: #f7f7f7; padding: 10px 14px; border-radius: 8px; max-height: 120px; overflow-y: auto; }
+</style>
+</head>
+<body>
+
+<div class="mockBanner">
+  <strong>로컬 목업 — 카페24 서버에 전혀 접속하지 않는다.</strong><br />
+  2026-07-15 실제 테스트몰 라이브 QA에서 확인한 진짜 마크업(<code>select.displaynone</code> +
+  <code>ul.ec-product-button</code> 위젯, <code>tbody.option_products</code> 선택 목록,
+  숨겨진 상태에서는 위젯 클릭이 씹히는 동작까지)을 그대로 흉내냈다. 아래 카드로
+  담기/빼기를 눌러보면 실제 옵션 UI가 어떻게 반응할지 배포 없이 미리 확인할 수 있다.
+  단, 이건 흉내일 뿐이라 <strong>진짜 카페24 검증(예: 필수옵션 검증, 가격 계산)은
+  대체하지 못한다</strong> — 최종 확인은 <code>npm run cafe24:verify</code> 등 라이브
+  QA로 한다.
+</div>
+
+<h1 style="font-size: 20px;">골라담기 간식팩 (목업)</h1>
+<p>판매가 10,000원</p>
+
+<table class="ec-base-table xans-element- xans-product xans-product-option xans-record-" border="1">
+  <caption>상품 옵션</caption>
+  <tbody class="xans-element- xans-product xans-product-option xans-record-">
+    <tr>
+      <th scope="row" style="text-align:left; width:100px;">구성</th>
+      <td>
+        <select id="product_option_id1" name="option1" class="ProductOption0 displaynone">
+          <option value="*">empty</option>
+          <option value="v-10-1">10개입_1</option>
+          <option value="v-10-2">10개입_2</option>
+          <option value="v-30-1">30개입_1 (+5,000원)</option>
+          <option value="v-30-2">30개입_2 (+5,000원)</option>
+          <option value="v-50-1">50개입_1 (+9,000원)</option>
+          <option value="v-50-2">50개입_2 (+9,000원)</option>
+          <option value="v-100-1">100개입_1 (+15,000원)</option>
+          <option value="v-100-2">100개입_2 (+15,000원)</option>
+        </select>
+        <ul
+          class="ec-product-button"
+          option_product_no="1"
+          option_style="button"
+          ec-dev-id="product_option_id1"
+          ec-dev-name="option1"
+        >
+          <li option_value="v-10-1" title="10개입_1"><a href="#none"><span>10개입_1</span></a></li>
+          <li option_value="v-10-2" title="10개입_2"><a href="#none"><span>10개입_2</span></a></li>
+          <li option_value="v-30-1" title="30개입_1 (+5,000원)"><a href="#none"><span>30개입_1</span></a></li>
+          <li option_value="v-30-2" title="30개입_2 (+5,000원)"><a href="#none"><span>30개입_2</span></a></li>
+          <li option_value="v-50-1" title="50개입_1 (+9,000원)"><a href="#none"><span>50개입_1</span></a></li>
+          <li option_value="v-50-2" title="50개입_2 (+9,000원)"><a href="#none"><span>50개입_2</span></a></li>
+          <li option_value="v-100-1" title="100개입_1 (+15,000원)"><a href="#none"><span>100개입_1</span></a></li>
+          <li option_value="v-100-2" title="100개입_2 (+15,000원)"><a href="#none"><span>100개입_2</span></a></li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!--@css(/css/module/product/option-picker.css)-->
+<link rel="stylesheet" href="../css/module/product/option-picker.css" />
+<div class="optionPicker" id="optionPicker"></div>
+<!--@js(/js/module/product/option-picker.config.js)-->
+<script src="../js/module/product/option-picker.config.js"></script>
+<!--@js(/js/module/product/option-picker.js)-->
+<script src="../js/module/product/option-picker.js"></script>
+
+<div id="mockSelectedList">
+  <!-- 실제 카페24 페이지도 처음부터 빈 "상품 목록" 테이블을 갖고 있다(담아야
+       생기는 게 아니라 항상 존재, 행만 늘어난다) — 그래야 MutationObserver가
+       초기화 시점에 이 tbody를 찾아 감시를 시작할 수 있다. -->
+  <table>
+    <caption>상품 목록</caption>
+    <tbody class="option_products"></tbody>
+  </table>
+</div>
+
+<div class="mockBuyArea">
+  <a href="#none" class="btnNormal">장바구니</a>
+  <a href="#none" class="btnSubmit">바로구매</a>
+</div>
+
+<div class="eventLog" id="eventLog"></div>
+
+<script>
+  // ── 실제 카페24 동작을 흉내내는 부분 (이 블록만 목업 전용, 나머지는 실제 배포 파일 그대로) ──
+  // 2026-07-15 라이브 QA로 확인한 진짜 동작:
+  //   1) 위젯의 <a> 클릭에 "선택 상품 목록에 담기" 로직이 붙어있다 (select 조작만으론 안 됨)
+  //   2) 그 행이 display:none으로 숨겨진 상태에서는 클릭이 씹힌다 (노출 여부를 확인하는 듯)
+  //   3) "선택 상품 목록"은 <tbody class="option_products">이고, 항목마다 .option_box_del로 삭제한다
+  var log = document.getElementById("eventLog");
+  function logEvent(msg) {
+    var line = document.createElement("div");
+    line.textContent = msg;
+    log.appendChild(line);
+    log.scrollTop = log.scrollHeight;
+  }
+
+  var select = document.getElementById("product_option_id1");
+  var buttonList = document.querySelector("ul.ec-product-button");
+  var rowSeq = 0;
+
+  function isVisible(el) {
+    return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
+  }
+
+  function ensureSelectedListTable() {
+    var container = document.getElementById("mockSelectedList");
+    var table = container.querySelector("table");
+    if (table) return table.querySelector("tbody.option_products");
+
+    table = document.createElement("table");
+    table.innerHTML = '<caption>상품 목록</caption><tbody class="option_products"></tbody>';
+    container.appendChild(table);
+    return table.querySelector("tbody.option_products");
+  }
+
+  buttonList.addEventListener("click", function (evt) {
+    var a = evt.target.closest("a");
+    if (!a) return;
+    evt.preventDefault();
+
+    if (!isVisible(a)) {
+      logEvent("(카페24 흉내) 숨겨진 위젯 클릭 — 무시함");
+      return;
+    }
+
+    var li = a.closest("li");
+    var value = li.getAttribute("option_value");
+    var title = li.getAttribute("title");
+
+    Array.prototype.forEach.call(buttonList.querySelectorAll("li"), function (el) {
+      el.classList.remove("ec-product-selected");
+    });
+    li.classList.add("ec-product-selected");
+
+    select.value = value;
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+
+    var tbody = ensureSelectedListTable();
+    rowSeq += 1;
+    var row = document.createElement("tr");
+    row.className = "option_product";
+    row.dataset.optionValue = value;
+    // 실제 모바일 스킨에서 확인한 마크업 그대로: 수량 컨트롤이 <span class="quantity">
+    // 같은 감싸는 클래스 없이 <p> 안에 바로 있다. PC는 그 감싸는 span이 있는데
+    // (2026-07-15 확인), 이 모바일 쪽(더 엄격한 케이스)으로 로컬 목업을 맞춰두면
+    // ".option_products .quantity"처럼 감싸는 클래스에만 의존하는 CSS 버그를
+    // 배포 전에 여기서 바로 잡을 수 있다 — 실제로 그 버그가 있었다.
+    row.innerHTML =
+      '<td>골라담기 간식팩<br>- <span>' + title + '</span>' +
+      '<p><input type="number" class="quantity_opt eProductQuantityClass" value="1">' +
+      '<a href="#none" class="up eProductQuantityUpClass">▲</a>' +
+      '<a href="#none" class="down eProductQuantityDownClass">▼</a></p></td>' +
+      '<td><a href="#none" class="delete"><img class="option_box_del" alt="삭제"></a></td>';
+    tbody.appendChild(row);
+    logEvent("(카페24 흉내) 담음: " + title);
+  });
+
+  document.getElementById("mockSelectedList").addEventListener("click", function (evt) {
+    // clickRowDeleteControl()은 .option_box_del(img)를 찾은 뒤 .closest("a")로
+    // 감싼 <a>를 클릭한다 — 그 a.click()의 이벤트 target은 a 자신이지 안의 img가
+    // 아니므로, 여기서도 a(.delete)를 기준으로 찾아야 한다.
+    var del = evt.target.closest("a.delete") || evt.target.closest(".option_box_del");
+    if (!del) return;
+    evt.preventDefault();
+    var row = del.closest("tr");
+    var value = row.dataset.optionValue;
+    row.remove();
+    logEvent("(카페24 흉내) 뺌: " + value);
+  });
+</script>
+
+</body>
+</html>
