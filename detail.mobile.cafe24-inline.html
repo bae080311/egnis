@@ -1,0 +1,1956 @@
+<!--@layout(/layout/basic/layout.html)-->
+<div module="product_detail">
+    <!--@css(/css/module/product/detail.css)-->
+    <!--@js(/js/module/product/detail.js)-->
+    <!--
+		$coupon_download_page = /coupon/coupon_productdetail.html
+    -->
+    <div id="titleArea">
+        <h2>상품상세 정보</h2>
+        <span module="Layout_MobileAction">
+            <a href="#none" onclick="{$go_back}"><img src="//img.echosting.cafe24.com/skin/mobile_ko_KR/layout/btn_back.gif" width="33" alt="뒤로가기"></a>
+        </span>
+    </div>
+
+    <h1 class="name">{$name}</h1>
+
+    <p class="prdIcon">{$soldout_icon} {$stock_icon} {$recommend_icon} {$new_icon} {$img_mileage_icon} {$product_icons} {$today_arrival_icon} {$pickup_icon} {$benefit_icons} <img src="//img.echosting.cafe24.com/design/skin/admin/ko_KR/ico_rental.png" alt="" class="{$rental_information_display|display}"> {$regular_delivery_icon} {$cultural_tax_icon}</p>
+
+
+    <div class="overview" module="product_image">
+        <!--@js(/js/module/product/image.js)-->
+        <div class="topLogo {$supply_link_display|display}">
+            <span>{$supply_top_logo}</span>
+            <a href="#none" onclick="{$supply_go_action}"><img src="{$supply_go_img}" alt="공급사 바로가기" /></a>
+        </div>
+
+        <div class="prdImgView">
+            <span class="wish">{$wish_icon}</span>
+            <p class="prdImg">
+                 <a href="#none" id="prdDetailImg" data-param="{$zoom_param}" >
+                    <img src="{$big_img}" class="bigImage" alt="{$seo_alt_tag}"><span module="product_Imagestyle"><span class="prdIcon {$icon_class_name}" style="background-image:url('{$icon_url}');"></span></span>
+                 </a>
+            </p>
+            <div module="Product_mobileImage">
+                <!--@css(/css/module/product/mobileImage.css)-->
+                <!--
+                    $swipe = yes
+                -->
+                <ul>
+                    <li data-param="{$zoom_param}">
+                        <p class="thumbnail">
+                            <img src="{$big_img}" class="{$thumb_img_class}" alt=""><span module="product_Imagestyle"><span class="prdIcon {$icon_class_name}" style="background-image:url('{$icon_url}');"></span></span>
+                        </p>
+                    </li>
+                    {$aAddImage}
+                </ul>
+            </div>
+        </div>
+        <div class="color {$colorchip_display|display}">
+            <div module="product_Colorchip">
+                <span class="chips" style="background-color:{$color};"></span>
+                <span class="chips" style="background-color:{$color};"></span>
+            </div>
+        </div>
+        <!--@import(/product/shoppQ/hashtag.html)-->
+        <div class="likeButton {$disp_likeprd_class}">
+            <button type="button"><span class="title">좋아요</span>{$disp_likeprd_icon}<span class="count">{$disp_likeprd_count}</span></button>
+        </div>
+    </div>
+
+    <div class="prdDesc">
+        <div class="ec-base-table gClearCell">
+            <table border="1">
+                <caption>상품 정보</caption>
+                <colgroup>
+                    <col style="width:100px;">
+                    <col style="width:auto;">
+                </colgroup>
+                <tbody class="priceArea">
+                    <tr class="{$product_price_display|display}">
+                        <th scope="row">판매가</th>
+                        <td class="price">
+                            <strong class="sale"><span id="span_product_price_text" class="{$product_price_class} {$product_sale_strike}">{$product_price}</span>{$txt_product_price}</strong><span id="span_product_price_text">{$product_tax_type_text}</span> <span class="soldOut"></span>
+                            <button type="button" class="btnRestockSms {$sms_restock_display|display}" onClick="{$action_sms_restock}">재입고 알림 SMS</button>
+                            <button type="button" class="btnRestockMail {$restock_email_display|display}" onClick="{$action_email_restock}">재입고 알림 메일</button>
+                        </td>
+                    </tr>
+                    <tr class="{$product_sale_display|display}" id="span_product_price_mobile_p_line">
+                        <th scope="row">할인판매가</th>
+                        <td class="price" ><strong class="sale"><span id="span_product_price_mobile_text" class="{$product_price_class}">{$product_price_mobile}</span>{$txt_product_price_mobile}</strong></td>
+                    </tr>
+                    <tr class="{$optimum_discount_price_display|display}" id="span_optimum_discount_price_mobile_p_line">
+                        <th scope="row">최적할인가</th>
+                        <td class="price" ><strong class="sale"><span id="span_optimum_discount_price_mobile_text" class="{$optimum_discount_price_class}">{$optimum_discount_price_mobile}</span>{$txt_optimum_discount_price_mobile}</strong></td>
+                    </tr>
+                </tbody>
+                <tbody>
+                    <tr id="span_product_price_mobile_d_line" class="{$product_sale_display|display}">
+                        <th scope="row">할인금액</th>
+                        <td><span class="discount">총 할인금액 {$mobile_dc_price|number}원<br>(모바일할인금액 {$mobile_dc_price|number}원)</span></td>
+                    </tr>
+                    <tr class="mileage {$mileage_display|display}">
+                        <th scope="row">{$mileage_name}</th>
+                        <td>{$mileage_list}</td>
+                    </tr>
+                    <tr class="{$naver_mileage_display|display}">
+                        <th>제휴적립금</th>
+                        <td>{$naver_mileage_title} {$naver_mileage_rate}</td>
+                    </tr>
+                </tbody>
+                <tbody class="delvtype">
+                    <tr class="{$delivery_display|display}">
+                        <th scope="row">배송방법</th>
+                        <td>{$delivery}</td>
+                    </tr>
+                    <tr class="{$delivery_price_display|display}">
+                        <th scope="row">배송비</th>
+                        <td>{$delivery_price}</td>
+                    </tr>
+                    <tr class="{$additional_description_translated_display|display}">
+                        <th scope="row">상품 추가설명 번역정보</th>
+                        <td>{$additional_description_translated}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!--- 렌탈서비스 -->
+            <table border="1" summary="" class="{$rental_information_display|display}">
+                <colgroup>
+                    <col style="width:100px;">
+                    <col style="width:auto;">
+                </colgroup>
+                <tbody>
+                <tr class="rental">
+                    <th scope="row">월 렌탈 금액</th>
+                    <td>
+                        <p class="rental-maximum">월 <span class="rental-maximum-price">{$rental_maximum_price|numberformat}</span>원</p><span>(<span class="rental-maximum-term">{$rental_maximum_term}</span>개월 기준)</span>
+                        <ul module="product_rental">
+                            <li><span class="rental-term">{$rental_term}</span>개월 / 월 <span class="rental-price">{$rental_price|numberformat}</span>원</li>
+                            <li><span class="rental-term">{$rental_term}</span>개월 / 월 <span class="rental-price">{$rental_price|numberformat}</span>원</li>
+                        </ul>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="ec-base-table gClearCell regularDelivery {$regular_delivery_display|display}">
+            <table border="1">
+                <colgroup>
+                   <col style="width:100px;">
+                   <col style="width:auto;">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th scope="row">구매방법</th>
+                    <td>
+                        <label><span class="{$one_time_purchase_display|display}">{$regular_deliveryT}</span>정기배송 <span class="badge {$regular_delivery_discount_display|display}">{$max_discount_value} <i class="icoDown">할인</i></span></label>
+                        <label class="{$one_time_purchase_display|display}">{$regular_deliveryF}1회구매</label>
+                    </td>
+                </tr>
+                <tr class="{$regular_cycle_period|display}" id="{$regular_cycle_period_id}">
+                    <td colspan="2" class="shippingCycle">
+                        <strong class="title">배송주기</strong>
+                        {$regularPeriod}
+                   </td>
+                </tr>
+                <tr class="{$regular_count_display|display}" id="{$regular_count_id}">
+                    <td colspan="2" class="shippingNum">
+                        <strong class="title">정기배송 횟수</strong>
+                         {$regularCount}
+                   </td>
+                </tr>
+                <tr id="{$regular_info_id}">
+                    <td colspan="2" class="shippingGuide">
+                        <div class="info {$regular_delivery_discount_display|display}" id="{$regular_delivery_discount_id}">
+                        	<strong class="title">정기배송 할인 <span class="icoSave">save</span></strong>
+                            <ul class="info" module="product_regularDiscount">
+                                <li>{$discount_count}차 이상 구매 시 : {$discount_value} <span class="icoDown">할인</span></li>
+                                <li>{$discount_count}차 이상 구매 시 : {$discount_value} <span class="icoDown">할인</span></li>
+                            </ul>
+                        </div>
+                        <div class="info">
+                            <ul class="ec-base-help typeDash">
+                                <li>배송주기, 정기배송 횟수는 상품 전체에 동일하게 적용됩니다.</li>
+                            </ul>
+                        </div>
+                   </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="ec-base-table typeWrite gClearCell">
+            <table border="1" module="product_option">
+                <!--
+                $use_per_add_option = yes
+                $default_option = yes
+                -->
+                <caption>상품 옵션</caption>
+                <colgroup>
+                    <col style="width:100px;">
+                    <col style="width:auto;">
+                </colgroup>
+                <tbody>
+                    <tr class="{$delvtype_display|display}">
+                        <th scope="row">배송</th>
+                        <td class="middle">
+                            <label>{$form.delvtypeA}국내배송</label>
+                            <label>{$form.delvtypeB}해외배송</label>
+                        </td>
+                    </tr>
+                </tbody>
+
+                <tbody module="product_option">
+                    <tr>
+                        <th scope="row">{$option_name}</th>
+                        <td class="middle">{$form.option}<p class="value">{$option_desc}</p></td>
+                    </tr>
+                    <tr module="product_quantity" class="quantity">
+                        <th scope="row">수량</th>
+                        <td>
+                            <div class="ec-base-qty">
+                                <a href="javascript:;" class="qtyDown eClearDown"><img id="{$quantity_down_id}" class="{$quantity_down_class}" alt="down" src="//img.echosting.cafe24.com/skin/mobile/common/ico_quantity_down.jpg" width="33" height="29"></a>
+                                {$form.quantity}
+                                <a href="javascript:;" class="qtyUp eClearUp"><img id="{$quantity_up_id}" class="{$quantity_up_class}" alt="up" src="//img.echosting.cafe24.com/skin/mobile/common/ico_quantity_up.jpg" width="33" height="29"></a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody>
+                    <tr module="product_addoption">
+                        <th scope="row">{$add_option_name}</th>
+                        <td class="middle">
+                            {$form.add_option}
+                            <span class="byte" title="현재글자수/최대글자수">[ <strong class="length">0</strong> / {$option_maxlength} ]</span>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody>
+                    <tr class="{$option_push_button_display|display}" id="{$option_push_button_id}">
+                        <td colspan="2" class="selectButton"><button type="button" class="btnStrong" onclick="{$action_push_button}">옵션 선택</button></td>
+                    </tr>
+                    <!-- 다중선택형 -->
+                    <tr class="quantity {$quantity_display|display}">
+                        <th scope="row">수량</th>
+                        <td>
+                            <div class="ec-base-qty">
+                                <a href="javascript:;" class="down {$quantity_down_class}" ><img id="{$quantity_down_id}" alt="down" src="//img.echosting.cafe24.com/skin/mobile/common/ico_quantity_down.jpg" width="33" height="29"></a>
+                                {$form.quantity}
+                                <a href="javascript:;" class="up {$quantity_up_class}"><img id="{$quantity_up_id}" alt="up" src="//img.echosting.cafe24.com/skin/mobile/common/ico_quantity_up.jpg" width="33" height="29"></a>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- 단일선택형 -->
+                    <tr module="product_quantity" class="quantity">
+                        <th scope="row">수량</th>
+                        <td>
+                            <div class="ec-base-qty">
+                                <a href="javascript:;" class="qtyDown eClearDown"><img id="{$quantity_down_id}" class="{$quantity_down_class}" alt="down" src="//img.echosting.cafe24.com/skin/mobile/common/ico_quantity_down.jpg" width="33" height="29"></a>
+                                {$form.quantity}
+                                <a href="javascript:;" class="qtyUp eClearUp"><img id="{$quantity_up_id}" class="{$quantity_up_class}" alt="up" src="//img.echosting.cafe24.com/skin/mobile/common/ico_quantity_up.jpg" width="33" height="29"></a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <style>
+/*
+ * 골라담기 커스텀 옵션 UI 스타일
+ * 값 출처: .claude/design/figma-style-tokens.md (피그마 시안에서 추출한 색상/타이포/spacing)
+ * 이 파일은 옵션 영역 전용이며, 그 외 상세페이지 영역에는 영향을 주지 않는다.
+ */
+
+.optionPicker {
+    margin: 16px 0;
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Malgun Gothic", sans-serif;
+    color: #171717;
+}
+
+/*
+ * 카페24 기본 텍스트버튼 옵션(select + ul.ec-product-button)은 삭제하지 않고
+ * 이 클래스로만 시각적으로 숨긴다. display:none을 쓰지 않는 이유는, 카페24의
+ * "선택 상품 목록에 담기" 클릭 핸들러가 요소의 실제 노출 여부(치수가 0인지)를
+ * 확인하는 것으로 실제 테스트몰에서 확인했기 때문이다 — display:none이면 이
+ * 핸들러가 반응하지 않아서, 담기/빼기 클릭마다 잠깐 보였다 숨었다 하는 방식을
+ * 처음엔 썼는데 그게 화면 깜빡임으로 보였다. 대신 치수(1px×1px)는 남기고
+ * 화면에서만 잘라내는("sr-only") 방식으로 바꿔서, 클릭은 항상 정상 처리되고
+ * 화면에는 아예 안 보이며 별도의 보임/숨김 전환도 필요 없다.
+ */
+.optionPickerNativeRow {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+/*
+ * "선택 상품 목록"(카페24가 담을 때마다 자동 생성하는 tbody.option_products)
+ * 자체는 삭제/재구현하지 않고 그대로 둔다 — 삭제(×) 버튼도 그대로 둬서
+ * 카드의 "빼기"와 같은 방식으로 계속 동작한다. 다만 각 줄의 수량 증감
+ * 컨트롤은 숨긴다: 그 컨트롤로 수량을 직접 늘리면 카드가 세는 "담은 횟수"
+ * (suffix 개수 기준 최대 추가 가능 횟수)와 실제 구매 수량이 어긋나게 된다
+ * (예: "10개입" 카드는 1/2로 보이는데 실제로는 그 줄 수량을 5로 올려버리는
+ * 식). 담기/빼기는 항상 카드로만 하도록 만들어 하드 룰(suffix 기준 횟수 제한)
+ * 을 우회하는 통로를 막는다. DOM/이벤트 자체는 삭제하지 않고 CSS로만 숨긴다.
+ *
+ * PC는 이 컨트롤을 <span class="quantity">로 감싸지만 모바일 스킨은 감싸는
+ * 클래스 없이 <p> 안에 바로 두는 걸 실제 확인했다 — 감싸는 요소 대신 실제
+ * 컨트롤 3개(입력창 .quantity_opt, 증가 .eProductQuantityUpClass, 감소
+ * .eProductQuantityDownClass)를 직접 지정해서 PC/모바일 마크업 차이와 무관하게
+ * 항상 걸리게 한다.
+ */
+.option_products .quantity,
+.option_products .quantity_opt,
+.option_products .eProductQuantityUpClass,
+.option_products .eProductQuantityDownClass {
+    display: none !important;
+}
+
+.optionPicker__header {
+    height: 44px;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    background: #f4f4f4;
+    border-radius: 4px 4px 0 0;
+}
+
+.optionPicker__title {
+    font-size: 14px;
+    font-weight: 500;
+    color: #525252;
+}
+
+.optionPicker__subtitle {
+    margin-left: 6px;
+    font-size: 12px;
+    color: #777777;
+}
+
+.optionPicker__list {
+    border: 1px solid #ededed;
+    border-top: none;
+    overflow: hidden;
+}
+
+/*
+ * 피그마 시안의 "총 수량" 요약 바(하단 정보 바) — 카드 목록 밑에 전체 담은
+ * 개수를 보여준다. 시안에는 이 아래에 "선택완료" 버튼도 있지만 그건 가져오지
+ * 않는다 — 카페24의 바로구매/장바구니 버튼이 이미 그 역할을 하고, 새 버튼을
+ * 추가하면 구매 버튼 영역과 중복/혼동될 수 있어서다(하드 룰: 구매 버튼 외형
+ * 수정 금지 — 새 구매류 버튼 추가도 같은 취지로 피한다). 목록의 아래쪽 모서리
+ * 둥글림을 이 바가 이어받는다(목록 뒤에 오는 마지막 요소라서).
+ */
+.optionPicker__footer {
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 14px;
+    background: #ffffff;
+    border: 1px solid #ededed;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+}
+
+.optionPicker__footerLabel {
+    font-size: 14px;
+    color: #525252;
+}
+
+.optionPicker__footerCount {
+    font-size: 14px;
+    font-weight: 600;
+    color: #ff692e;
+}
+
+.optionPicker__empty {
+    padding: 16px 12px;
+    font-size: 13px;
+    color: #777777;
+}
+
+.optionPicker__card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 12px;
+    background: #ffffff;
+    border-bottom: 1px solid #ededed;
+}
+
+.optionPicker__card:last-child {
+    border-bottom: none;
+}
+
+.optionPicker__card--selected {
+    background: #fff1eb;
+}
+
+.optionPicker__card--disabled {
+    background: #ededed;
+}
+
+.optionPicker__card--disabled .optionPicker__label,
+.optionPicker__card--disabled .optionPicker__price,
+.optionPicker__card--disabled .optionPicker__unitPrice,
+.optionPicker__card--disabled .optionPicker__limit {
+    color: #a1a1a1;
+}
+
+.optionPicker__cardMain {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.optionPicker__count {
+    flex: 0 0 auto;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid #e5e5e5;
+    font-size: 11px;
+    font-weight: 600;
+    color: #a1a1a1;
+    background: #ffffff;
+}
+
+.optionPicker__card--selected .optionPicker__count {
+    border-color: #ff692e;
+    background: #ff692e;
+    color: #ffffff;
+}
+
+.optionPicker__info {
+    min-width: 0;
+}
+
+.optionPicker__labelRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.optionPicker__label {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.48px;
+    color: #171717;
+}
+
+.optionPicker__card--selected .optionPicker__label {
+    color: #ff692e;
+}
+
+.optionPicker__badge {
+    display: inline-block;
+    padding: 4px;
+    border-radius: 2px;
+    font-size: 12px;
+    font-weight: 600;
+    background: #fff1eb;
+    color: #ff692e;
+    white-space: nowrap;
+}
+
+.optionPicker__badge--strong {
+    background: #ffebeb;
+    color: #eb0004;
+}
+
+.optionPicker__desc {
+    margin-top: 2px;
+    font-size: 12px;
+    color: #777777;
+}
+
+.optionPicker__price {
+    margin-top: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #171717;
+}
+
+.optionPicker__card--selected .optionPicker__price {
+    color: #ff692e;
+}
+
+/* 피그마 시안처럼 가격 숫자는 SemiBold(부모 기본값), "원"만 Regular로 낮춘다. */
+.optionPicker__priceWon {
+    font-weight: 400;
+}
+
+.optionPicker__unitPrice {
+    margin-left: 4px;
+    font-size: 12px;
+    font-weight: 400;
+    color: #777777;
+}
+
+.optionPicker__limit {
+    margin-top: 2px;
+    font-size: 12px;
+    color: #777777;
+}
+
+.optionPicker__limit--reached {
+    color: #eb0004;
+}
+
+.optionPicker__stepper {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: stretch;
+    border: 1px solid #d4d4d4;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.optionPicker__btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: #ffffff;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    color: #171717;
+}
+
+.optionPicker__btn:disabled {
+    background: #e5e5e5;
+    color: #a1a1a1;
+    cursor: not-allowed;
+}
+
+.optionPicker__btn--remove {
+    border-right: 1px solid #d4d4d4;
+}
+
+.optionPicker__btn--add {
+    border-left: 1px solid #d4d4d4;
+}
+
+.optionPicker__qty {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+    background: #ededed;
+}
+
+.optionPicker__status {
+    margin-top: 8px;
+    padding: 0 2px;
+    font-size: 12px;
+    color: #777777;
+    min-height: 16px;
+}
+
+.optionPicker__status--reached {
+    color: #eb0004;
+}
+
+/* 모바일: 카드 세로 배치, 버튼/터치 영역이 하단 구매 버튼 영역과 겹치지 않도록
+   position은 항상 inline 문서 흐름을 사용하고 fixed/모달을 쓰지 않는다. */
+@media (max-width: 480px) {
+    .optionPicker__card {
+        gap: 12px;
+        padding: 12px 10px;
+    }
+
+    .optionPicker__cardMain {
+        gap: 8px;
+    }
+
+    .optionPicker__label {
+        font-size: 15px;
+    }
+
+    .optionPicker__desc,
+    .optionPicker__price,
+    .optionPicker__limit {
+        font-size: 11px;
+    }
+
+    .optionPicker__badge {
+        font-size: 11px;
+    }
+
+    .optionPicker__stepper {
+        flex-shrink: 0;
+    }
+
+    .optionPicker__footer {
+        padding: 0 10px;
+    }
+
+    .optionPicker__footerLabel,
+    .optionPicker__footerCount {
+        font-size: 12px;
+    }
+}
+
+            </style>
+            <!-- 골라담기 커스텀 옵션 UI: 위 product_option 테이블의 네이티브 select를
+                 대신 조작하는 방식으로 동작한다(재구현 아님). 뱃지/설명/추천문구/
+                 가격표시는 아래 option-picker.config.js 블록에서 관리한다. -->
+            <div class="optionPicker" id="optionPicker"></div>
+            <script>
+/*
+ * 골라담기 옵션 UI 설정값
+ *
+ * 이 파일은 "표시용" 값만 담는다 (뱃지 문구, 설명, 추천 문구, 안내 문구 포맷).
+ * 실제 개입수별 추가 가능 횟수는 카페24 옵션값의 suffix(_1, _2 ...) 개수로
+ * option-picker.js가 자동 계산한다 — 이 파일에서 그 숫자를 바꿀 수 없다.
+ * (하드 룰: 같은 개입수 옵션값이 n개면 그 개입수는 최대 n번까지만 추가 가능)
+ *
+ * 실제 가격도 이 파일에 넣지 않는다 — 카페24 옵션값에 설정된 실제 가격을
+ * option-picker.js가 그대로 읽어와 표시하므로, 관리자에서 가격을 바꾸면
+ * 이 파일을 건드리지 않아도 화면에 자동 반영된다.
+ *
+ * 다른 작업자가 값만 바꿔 쓰는 방법:
+ * - tiers 객체의 key는 옵션값에서 suffix(_1, _2 ...)를 뗀 이름과 정확히 일치해야 한다.
+ *   예) 옵션값 "10개입_1" → key는 "10개입"
+ * - tiers에 없는 개입수가 나오면 defaultTier 값으로 대체된다 (에러 없이 동작).
+ */
+window.OptionPickerConfig = {
+    ui: {
+        title: "골라담기",
+        subtitle: "개입 수를 골라 담아보세요",
+        addButtonLabel: "담기",
+        removeButtonLabel: "빼기",
+        emptyListText: "옵션 정보를 불러오지 못했습니다. 아래 기본 옵션에서 선택해주세요.",
+        limitLabel: function (max) {
+            return "최대 " + max + "개까지 추가 가능";
+        },
+        limitReachedLabel: "추가 가능 횟수를 모두 담았어요",
+        soldOutLabel: "품절",
+        unitPriceLabel: function (unitPrice) {
+            return "개당 " + unitPrice.toLocaleString() + "원";
+        },
+        totalCountLabel: function (count) {
+            return count + "개";
+        }
+    },
+
+    tiers: {
+        "10개입": {
+            badge: null,
+            description: "가볍게 시작하기 좋아요"
+        },
+        "30개입": {
+            badge: "가장 많이 담아요",
+            badgeStrong: false,
+            description: "2주 분량으로 넉넉해요"
+        },
+        "50개입": {
+            badge: null,
+            description: "한 달 분량, 든든하게"
+        },
+        "100개입": {
+            badge: "최대 할인",
+            badgeStrong: true,
+            description: "가장 알뜰한 구성이에요"
+        }
+    },
+
+    defaultTier: {
+        badge: null,
+        badgeStrong: false,
+        description: ""
+    }
+};
+
+            </script>
+            <script>
+/*
+ * 골라담기 커스텀 옵션 UI — 로직
+ *
+ * 이 스크립트는 카페24 기본 텍스트버튼 옵션(select)의 값을 대신 세팅하고
+ * change 이벤트를 dispatch하는 방식으로만 동작한다. 상품 담기/가격 계산/
+ * 목록 append/삭제는 전부 카페24 자체 스크립트가 처리하며, 이 파일은
+ * 그 결과(선택 상품 목록 테이블)를 읽어 카드 UI 상태만 갱신한다.
+ * → 구매 로직을 재구현하지 않는다 (하드 룰).
+ *
+ * 표시용 문구/뱃지는 option-picker.config.js에서 가져온다.
+ * 개입수별 추가 가능 횟수는 옵션값의 suffix(_1, _2 ...) 개수를 세어 계산한다
+ * (하드 룰: 같은 개입수 옵션값이 n개면 최대 n번까지만 추가 가능).
+ */
+(function () {
+    "use strict";
+
+    var DEFAULT_CONFIG = {
+        ui: {},
+        tiers: {},
+        defaultTier: { badge: null, description: "" }
+    };
+
+    // config를 한 번만 읽어 캐싱하지 않고 쓸 때마다 조회한다 — 카페24가 스크립트를
+    // defer/async로 불러오는 등의 이유로 option-picker.config.js가 이 파일보다
+    // 늦게 실행되더라도(둘 다 detail.html에 순서대로 있지만 보장된 것은 아니다),
+    // 실제 렌더링 시점엔 config가 이미 로드돼 있으면 정상 값을 읽는다.
+    function getConfig() {
+        return (typeof window !== "undefined" && window.OptionPickerConfig) || DEFAULT_CONFIG;
+    }
+
+    var SUFFIX_PATTERN = /^(.*)_(\d+)$/;
+    var PRICE_PATTERN = /([+\-]?\s?[\d,]+)\s*원/;
+    // "옵션가 표시"가 켜져 있으면 옵션 텍스트 끝에 "10개입_1 (+12,000원)"처럼
+    // 가격이 붙는다. suffix를 파싱하기 전에 이 꼬리표를 먼저 떼어낸다 —
+    // 안 떼면 SUFFIX_PATTERN이 끝 앵커(`$`) 때문에 매칭에 실패해 티어 그룹핑이 깨진다.
+    var TRAILING_PRICE_PATTERN = /\s*\(?\s*[+\-]?\s?[\d,]+\s*원\s*\)?\s*$/;
+    var LEADING_NUMBER_PATTERN = /^(\d+)/;
+
+    var state = {
+        optionTable: null,
+        select: null,
+        listBody: null,
+        root: null,
+        tiers: [], // [{ name, variants: [{value, text, suffix, priceText, disabled}] }]
+        observer: null,
+        pending: {} // { [tierName]: true } — 담기/빼기 클릭 후 카페24가 목록을 갱신할 때까지의 잠금
+    };
+
+    // 담기/빼기를 누른 뒤 MutationObserver가 실제 변경을 감지하기 전까지 같은 티어를
+    // 다시 누르면 어떤 variant가 비어있는지 판단하는 기준(state.tiers[].variants[].inUse)이
+    // 아직 갱신 전이라 중복 선택될 수 있다. 티어별로 잠가서 막는다.
+    var PENDING_TIMEOUT_MS = 4000; // 카페24가 선택을 거부(품절 등)해도 버튼이 영구히 잠기지 않도록 하는 안전장치
+
+    function isPending(tierName) {
+        return !!state.pending[tierName];
+    }
+
+    function setPending(tierName) {
+        state.pending[tierName] = window.setTimeout(function () {
+            delete state.pending[tierName];
+            safeRender();
+        }, PENDING_TIMEOUT_MS);
+    }
+
+    function clearPending(tierName) {
+        var timeoutId = state.pending[tierName];
+        if (timeoutId) window.clearTimeout(timeoutId);
+        delete state.pending[tierName];
+    }
+
+    function clearAllPending() {
+        Object.keys(state.pending).forEach(clearPending);
+    }
+
+    function ready(fn) {
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", fn);
+        } else {
+            fn();
+        }
+    }
+
+    // 카페24 템플릿 소스의 module="product_option" 속성은 서버 렌더링 과정에서
+    // 사라지고, 실제로 브라우저에 도착하는 HTML에는 대신 xans-product-option
+    // 클래스가 붙는다(실제 테스트몰에서 확인). module 속성 selector는 스킨에 따라
+    // 남아있을 가능성을 대비한 1차 시도로만 남겨두고, 실제로 작동하는 클래스
+    // selector를 폴백으로 둔다.
+    function findOptionTable() {
+        return (
+            document.querySelector('table[module="product_option"]') ||
+            document.querySelector("table.xans-product-option")
+        );
+    }
+
+    function findNativeSelect(optionTable) {
+        if (!optionTable) return null;
+        return optionTable.querySelector("select");
+    }
+
+    // 카페24가 append하는 "선택 상품 목록" 테이블의 마지막 tbody.
+    // {$total.total_id}는 서버 렌더링 시 실제 id로 치환되므로 id로는 찾지 않고
+    // caption 텍스트("상품 목록")로 구조 기반 탐색한다.
+    function findSelectedListBody() {
+        // 실제 테스트몰에서 확인한 진짜 마크업: <tbody class="option_products">.
+        // 처음엔 ".detailArea table" 범위 안에서 caption 텍스트("상품 목록")로만
+        // 찾았는데, 실제로 이 테이블이 .detailArea 바깥에 있어서 항상 못 찾고
+        // 있었다(그래서 역방향 동기화가 전혀 동작하지 않던 버그) — 클래스로 먼저
+        // 찾고, 스킨/버전이 달라 클래스명이 다를 경우를 대비해 caption 텍스트
+        // 기반 탐색을 범위 제한 없이 폴백으로 남겨둔다.
+        var direct = document.querySelector("tbody.option_products");
+        if (direct) return direct;
+
+        var tables = document.querySelectorAll("table");
+        for (var i = 0; i < tables.length; i++) {
+            var caption = tables[i].querySelector("caption");
+            if (caption && caption.textContent.trim() === "상품 목록") {
+                var bodies = tables[i].querySelectorAll("tbody");
+                if (bodies.length) {
+                    return bodies[bodies.length - 1];
+                }
+            }
+        }
+        return null;
+    }
+
+    function parsePriceText(rawText) {
+        var m = rawText.match(PRICE_PATTERN);
+        return m ? m[0].replace(/\s/g, "") : null;
+    }
+
+    // 가격 꼬리표를 뗀 순수 옵션 라벨에서 "{개입수}_{순번}"을 분리한다.
+    // 매칭 실패 시(suffix 없는 옵션값) 전체 라벨을 그 자체로 단일 variant 티어로 취급한다.
+    function parseTierAndSuffix(labelText) {
+        var m = labelText.match(SUFFIX_PATTERN);
+        if (m) {
+            return { tierName: m[1], suffix: parseInt(m[2], 10) };
+        }
+        return { tierName: labelText, suffix: 1 };
+    }
+
+    function parseTiersFromSelect(select) {
+        if (!select || !select.options) return []; // 예상과 다른 DOM이 들어와도 던지지 않고 빈 배열로
+
+        var order = [];
+        var map = {};
+
+        var options = Array.prototype.slice.call(select.options);
+        options.forEach(function (opt) {
+            var value = opt.value;
+            var text = opt.text.trim();
+            // "*"는 카페24가 필수옵션 미선택 상태에 쓰는 표준 플레이스홀더 값이다
+            // (실제 테스트몰에서 텍스트가 "선택해주세요"가 아니라 "empty"로 나오는
+            // 경우까지 확인했다 — 그래도 value="*"는 그대로라 이 값으로 걸러낸다).
+            if (!value || value === "*" || !text) return;
+
+            var labelText = text.replace(TRAILING_PRICE_PATTERN, "").trim();
+            var parsed = parseTierAndSuffix(labelText);
+            var tierName = parsed.tierName;
+            var suffix = parsed.suffix;
+
+            if (!map[tierName]) {
+                map[tierName] = { name: tierName, variants: [] };
+                order.push(tierName);
+            }
+
+            map[tierName].variants.push({
+                value: value,
+                // "선택 상품 목록"에 append되는 행은 가격 없이 옵션명만 보여주는 것이
+                // 일반적이므로, 행 매칭(rowMatchesVariant)에는 가격 꼬리표를 뗀
+                // labelText를 쓴다. 가격은 priceText로 별도 보관해 카드 표시에만 쓴다.
+                text: labelText,
+                suffix: suffix,
+                priceText: parsePriceText(text),
+                disabled: !!opt.disabled
+            });
+        });
+
+        return order.map(function (name) {
+            var tier = map[name];
+            tier.variants.sort(function (a, b) {
+                return a.suffix - b.suffix;
+            });
+            return tier;
+        });
+    }
+
+    // "옵션 스타일: 텍스트버튼"은 실제로는 <select>가 아니라 그 옆에 카페24가
+    // 같이 렌더링하는 ul.ec-product-button(li[option_value]/a) 클릭형 위젯이
+    // 진짜 UI다(실제 테스트몰에서 확인) — 카페24 자체 "선택 상품 목록에 담기"
+    // 로직이 이 <a> 클릭에 붙어 있어서, select.value만 바꾸고 change 이벤트를
+    // 보내는 것만으로는 담기가 실제로 반영되지 않는다(라이브 배포 후 클릭 QA로
+    // 발견한 버그). 그래서 이 위젯을 찾으면 해당 <a>를 직접 클릭하고, 위젯이
+    // 없는 스킨/스타일(순수 select 드롭다운)이면 기존 방식으로 폴백한다.
+    function findOptionButtonLink(optionTable, optionValue) {
+        if (!optionTable) return null;
+        var buttonList = optionTable.querySelector('ul.ec-product-button, ul[option_style="button"]');
+        if (!buttonList) return null;
+        var items = Array.prototype.slice.call(buttonList.querySelectorAll("li"));
+        for (var i = 0; i < items.length; i++) {
+            if (items[i].getAttribute("option_value") === optionValue) {
+                return items[i].querySelector("a");
+            }
+        }
+        return null;
+    }
+
+    // select의 값이 바뀌지 않으면(같은 옵션을 연속으로 다시 선택) change 이벤트가
+    // 발생하지 않아 카페24 담기 로직이 실행되지 않는다. 매번 실제 값 전환이
+    // 일어나도록 빈 값으로 리셋한 뒤 목표 값으로 세팅한다(폴백 경로에서만 쓰임).
+    //
+    // 카페24의 클릭 핸들러는 요소가 실제로 노출된 상태인지 확인하는 것으로
+    // 보인다(실제 테스트몰에서 확인 — display:none이면 클릭이 씹힘). 처음엔
+    // 클릭 전후로 숨김을 껐다 켰다 했는데, 그 사이 화면이 그려지면 사용자
+    // 눈에 깜빡임으로 보이는 문제가 있었다. 지금은 CSS(option-picker.css의
+    // .optionPickerNativeRow)가 display:none 대신 치수는 남기고 화면에서만
+    // 잘라내는("sr-only") 방식이라, 이 함수는 숨김을 건드릴 필요 없이 그냥
+    // 클릭만 하면 된다 — 카페24 쪽에서는 항상 "노출된" 상태로 보이기 때문이다.
+    function triggerNativeSelect(select, optionValue, optionTable) {
+        var link = findOptionButtonLink(optionTable, optionValue);
+        if (link) {
+            link.click();
+            return;
+        }
+
+        select.value = "";
+        select.value = optionValue;
+        var evt = new Event("change", { bubbles: true });
+        select.dispatchEvent(evt);
+    }
+
+    function rowMatchesVariant(rowText, variantText) {
+        var idx = rowText.indexOf(variantText);
+        if (idx === -1) return false;
+        var before = rowText.charAt(idx - 1);
+        var after = rowText.charAt(idx + variantText.length);
+        var beforeOk = !before || !/[0-9]/.test(before);
+        var afterOk = !after || !/[0-9_]/.test(after);
+        return beforeOk && afterOk;
+    }
+
+    function findRowForVariant(listBody, variantText) {
+        if (!listBody) return null;
+        var rows = listBody.querySelectorAll("tr");
+        for (var i = 0; i < rows.length; i++) {
+            if (rowMatchesVariant(rows[i].textContent, variantText)) {
+                return rows[i];
+            }
+        }
+        return null;
+    }
+
+    function clickRowDeleteControl(row) {
+        if (!row) return;
+        var deleteEl =
+            row.querySelector(".option_box_del") ||
+            row.querySelector('a[href="#none"]:last-of-type img') ||
+            row.querySelector('a[href="#none"]');
+        var clickable = deleteEl ? deleteEl.closest("a") || deleteEl : null;
+        if (clickable && typeof clickable.click === "function") {
+            clickable.click();
+        }
+    }
+
+    function recomputeUsage() {
+        var listBody = findSelectedListBody();
+        state.listBody = listBody;
+
+        state.tiers.forEach(function (tier) {
+            tier.variants.forEach(function (variant) {
+                variant.inUse = !!findRowForVariant(listBody, variant.text);
+            });
+        });
+    }
+
+    function nextAvailableVariant(tier) {
+        for (var i = 0; i < tier.variants.length; i++) {
+            var v = tier.variants[i];
+            if (!v.inUse && !v.disabled) return v;
+        }
+        return null;
+    }
+
+    function lastUsedVariant(tier) {
+        for (var i = tier.variants.length - 1; i >= 0; i--) {
+            if (tier.variants[i].inUse) return tier.variants[i];
+        }
+        return null;
+    }
+
+    function tierConfig(name) {
+        var config = getConfig();
+        var tiers = (config && config.tiers) || {};
+        return tiers[name] || config.defaultTier || {};
+    }
+
+    function formatUnitPrice(tierName, priceText) {
+        if (!priceText) return null;
+        var numMatch = priceText.match(/[\d,]+/);
+        var countMatch = tierName.match(LEADING_NUMBER_PATTERN);
+        if (!numMatch || !countMatch) return null;
+        var amount = parseInt(numMatch[0].replace(/,/g, ""), 10);
+        var count = parseInt(countMatch[1], 10);
+        if (!amount || !count) return null;
+        var unit = Math.round(amount / count);
+        var ui = getConfig().ui;
+        var fn = ui && ui.unitPriceLabel;
+        return typeof fn === "function" ? fn(unit) : "개당 " + unit.toLocaleString() + "원";
+    }
+
+    function buildCard(tier) {
+        var used = tier.variants.filter(function (v) {
+            return v.inUse;
+        }).length;
+        var maxAdd = tier.variants.length;
+        var allDisabled = tier.variants.every(function (v) {
+            return v.disabled;
+        });
+        var limitReached = used >= maxAdd;
+        var cfg = tierConfig(tier.name);
+        var ui = getConfig().ui || {};
+
+        var card = document.createElement("div");
+        card.className = "optionPicker__card";
+        card.setAttribute("data-tier", tier.name);
+        if (used > 0) card.classList.add("optionPicker__card--selected");
+        if (allDisabled) card.classList.add("optionPicker__card--disabled");
+
+        var main = document.createElement("div");
+        main.className = "optionPicker__cardMain";
+
+        var countEl = document.createElement("span");
+        countEl.className = "optionPicker__count";
+        countEl.textContent = String(used);
+
+        var info = document.createElement("div");
+        info.className = "optionPicker__info";
+
+        var labelRow = document.createElement("div");
+        labelRow.className = "optionPicker__labelRow";
+
+        var label = document.createElement("strong");
+        label.className = "optionPicker__label";
+        label.textContent = tier.name;
+        labelRow.appendChild(label);
+
+        if (cfg.badge) {
+            var badge = document.createElement("span");
+            badge.className = "optionPicker__badge" + (cfg.badgeStrong ? " optionPicker__badge--strong" : "");
+            badge.textContent = cfg.badge;
+            labelRow.appendChild(badge);
+        }
+
+        info.appendChild(labelRow);
+
+        if (cfg.description) {
+            var desc = document.createElement("p");
+            desc.className = "optionPicker__desc";
+            desc.textContent = cfg.description;
+            info.appendChild(desc);
+        }
+
+        var firstVariantPrice = tier.variants[0] && tier.variants[0].priceText;
+        if (firstVariantPrice) {
+            var price = document.createElement("p");
+            price.className = "optionPicker__price";
+            // 피그마 시안처럼 숫자는 SemiBold(부모 기본 스타일), "원"은 Regular로
+            // 분리해서 표시한다("+15,000" SemiBold + "원" Regular).
+            if (firstVariantPrice.charAt(firstVariantPrice.length - 1) === "원") {
+                price.appendChild(document.createTextNode(firstVariantPrice.slice(0, -1)));
+                var wonSpan = document.createElement("span");
+                wonSpan.className = "optionPicker__priceWon";
+                wonSpan.textContent = "원";
+                price.appendChild(wonSpan);
+            } else {
+                price.textContent = firstVariantPrice;
+            }
+            var unitText = formatUnitPrice(tier.name, firstVariantPrice);
+            if (unitText) {
+                var unitSpan = document.createElement("span");
+                unitSpan.className = "optionPicker__unitPrice";
+                unitSpan.textContent = unitText;
+                price.appendChild(unitSpan);
+            }
+            info.appendChild(price);
+        }
+
+        var limit = document.createElement("p");
+        limit.className = "optionPicker__limit" + (limitReached ? " optionPicker__limit--reached" : "");
+        limit.textContent = allDisabled
+            ? ui.soldOutLabel || "품절"
+            : limitReached
+            ? ui.limitReachedLabel || "추가 가능 횟수를 모두 담았어요"
+            : typeof ui.limitLabel === "function"
+            ? ui.limitLabel(maxAdd)
+            : "최대 " + maxAdd + "개까지 추가 가능";
+        info.appendChild(limit);
+
+        main.appendChild(countEl);
+        main.appendChild(info);
+
+        var stepper = document.createElement("div");
+        stepper.className = "optionPicker__stepper";
+
+        var busy = isPending(tier.name);
+
+        var removeBtn = document.createElement("button");
+        removeBtn.type = "button";
+        removeBtn.className = "optionPicker__btn optionPicker__btn--remove";
+        removeBtn.setAttribute("aria-label", ui.removeButtonLabel || "빼기");
+        removeBtn.textContent = "−";
+        removeBtn.disabled = used === 0 || busy;
+        removeBtn.addEventListener("click", function () {
+            if (isPending(tier.name)) return;
+            var target = lastUsedVariant(tier);
+            if (!target) return;
+            var row = findRowForVariant(state.listBody, target.text);
+            if (!row) return;
+            setPending(tier.name);
+            safeRender();
+            clickRowDeleteControl(row);
+        });
+
+        var qtyEl = document.createElement("span");
+        qtyEl.className = "optionPicker__qty";
+        qtyEl.textContent = String(used);
+
+        var addBtn = document.createElement("button");
+        addBtn.type = "button";
+        addBtn.className = "optionPicker__btn optionPicker__btn--add";
+        addBtn.setAttribute("aria-label", ui.addButtonLabel || "담기");
+        addBtn.textContent = "+";
+        addBtn.disabled = limitReached || allDisabled || busy;
+        addBtn.addEventListener("click", function () {
+            if (isPending(tier.name)) return;
+            var next = nextAvailableVariant(tier);
+            if (!next || !state.select) return;
+            setPending(tier.name);
+            safeRender();
+            triggerNativeSelect(state.select, next.value, state.optionTable);
+        });
+
+        stepper.appendChild(removeBtn);
+        stepper.appendChild(qtyEl);
+        stepper.appendChild(addBtn);
+
+        card.appendChild(main);
+        card.appendChild(stepper);
+        return card;
+    }
+
+    function render() {
+        if (!state.root) return;
+        recomputeUsage();
+
+        state.root.innerHTML = "";
+
+        var ui = getConfig().ui || {};
+        var header = document.createElement("div");
+        header.className = "optionPicker__header";
+        var title = document.createElement("span");
+        title.className = "optionPicker__title";
+        title.textContent = ui.title || "골라담기";
+        header.appendChild(title);
+        if (ui.subtitle) {
+            var subtitle = document.createElement("span");
+            subtitle.className = "optionPicker__subtitle";
+            subtitle.textContent = ui.subtitle;
+            header.appendChild(subtitle);
+        }
+        state.root.appendChild(header);
+
+        var list = document.createElement("div");
+        list.className = "optionPicker__list";
+
+        if (!state.tiers.length) {
+            var empty = document.createElement("p");
+            empty.className = "optionPicker__empty";
+            empty.textContent = ui.emptyListText || "옵션 정보를 불러오지 못했습니다.";
+            list.appendChild(empty);
+        } else {
+            state.tiers.forEach(function (tier) {
+                list.appendChild(buildCard(tier));
+            });
+        }
+
+        state.root.appendChild(list);
+
+        // 피그마 시안의 "총 수량" 요약 바 — 개입수 카드가 여러 개일 때 전체
+        // 담은 개수를 한눈에 보여준다(#7 활성화 상태 표시를 카드 단위뿐 아니라
+        // 전체 합계로도 보강). "선택완료" 버튼은 가져오지 않는다 — 카페24의
+        // 바로구매/장바구니가 이미 그 역할을 하므로 중복이다.
+        if (state.tiers.length) {
+            var totalUsed = state.tiers.reduce(function (sum, tier) {
+                return (
+                    sum +
+                    tier.variants.filter(function (v) {
+                        return v.inUse;
+                    }).length
+                );
+            }, 0);
+            var footer = document.createElement("div");
+            footer.className = "optionPicker__footer";
+            var totalLabel = document.createElement("span");
+            totalLabel.className = "optionPicker__footerLabel";
+            totalLabel.textContent = "총 담은 개수";
+            var totalCount = document.createElement("span");
+            totalCount.className = "optionPicker__footerCount";
+            totalCount.textContent =
+                typeof ui.totalCountLabel === "function" ? ui.totalCountLabel(totalUsed) : totalUsed + "개";
+            footer.appendChild(totalLabel);
+            footer.appendChild(totalCount);
+            state.root.appendChild(footer);
+        }
+    }
+
+    function logError(message, err) {
+        if (typeof console !== "undefined" && console.error) {
+            console.error("[option-picker] " + message, err);
+        }
+    }
+
+    // 네이티브 옵션 행을 숨긴 상태였다면 다시 보이게 하고 커스텀 UI를 비운다.
+    // render() 도중 예상 못 한 예외가 나도 손님이 옵션을 아예 못 고르는 상태가
+    // 되지 않도록 하는 최후의 안전장치 — 실패하면 그냥 네이티브 UI로 돌아간다.
+    var brokenBeyondRecovery = false;
+    function revertToNative() {
+        brokenBeyondRecovery = true;
+        if (state.observer) {
+            state.observer.disconnect();
+            state.observer = null;
+        }
+        if (state.optionTable) {
+            var row = state.optionTable.querySelector(".optionPickerNativeRow");
+            if (row) row.classList.remove("optionPickerNativeRow");
+        }
+        if (state.root) state.root.innerHTML = "";
+    }
+
+    // render()는 실제 DOM(선택 상품 목록 등)을 읽어 동작하므로, 이 스크립트가
+    // 세운 가정과 다른 마크업을 만나면 언제든 예외가 날 수 있다. 항상 이 래퍼를
+    // 통해서만 호출해 실패 시 조용히 네이티브 UI로 폴백하게 한다.
+    function safeRender() {
+        if (brokenBeyondRecovery) return;
+        try {
+            render();
+        } catch (err) {
+            logError("렌더링 중 오류가 발생해 네이티브 옵션으로 되돌립니다.", err);
+            revertToNative();
+        }
+    }
+
+    var renderScheduled = false;
+    function scheduleRender() {
+        if (renderScheduled) return;
+        renderScheduled = true;
+        (window.requestAnimationFrame || window.setTimeout)(function () {
+            renderScheduled = false;
+            safeRender();
+        }, 0);
+    }
+
+    function observeSelectedList() {
+        if (typeof MutationObserver === "undefined") return; // 아주 오래된 브라우저: 초기 렌더만 유지, 역방향 동기화는 생략
+
+        var listBody = findSelectedListBody();
+        if (!listBody) return;
+
+        if (state.observer) {
+            state.observer.disconnect();
+        }
+
+        state.observer = new MutationObserver(function () {
+            // 실제 목록이 바뀌었다는 확인이므로, 그 변화를 유발한 담기/빼기 클릭의
+            // 잠금을 여기서 해제한다(락은 render()가 아니라 여기서만 풀린다).
+            clearAllPending();
+            scheduleRender();
+        });
+
+        // tbody 자체가 매 렌더링마다 교체될 수 있어, 목록 상위(테이블)까지 관찰한다.
+        var table = listBody.closest("table") || listBody;
+        state.observer.observe(table, { childList: true, subtree: true });
+    }
+
+    var initialized = false;
+    function init() {
+        if (initialized) return; // 스크립트가 실수로 두 번 포함되는 경우 등 중복 초기화 방지
+        initialized = true;
+
+        try {
+            var optionTable = findOptionTable();
+            if (!optionTable) return;
+
+            var select = findNativeSelect(optionTable);
+            if (!select) {
+                // 카페24가 select가 아닌 다른 마크업으로 렌더링하는 경우: 커스텀 UI를 그리지
+                // 않고 기본 옵션 UI를 그대로 노출한다 (구매 흐름을 막지 않는 것이 최우선).
+                return;
+            }
+
+            var root = document.getElementById("optionPicker");
+            if (!root) return;
+
+            state.optionTable = optionTable;
+            state.select = select;
+            state.root = root;
+            state.tiers = parseTiersFromSelect(select);
+
+            safeRender();
+            if (brokenBeyondRecovery) return; // 첫 렌더부터 실패하면 네이티브 행을 숨기지 않고 종료
+
+            // 첫 렌더가 성공적으로 끝난 뒤에만 네이티브 옵션 행을 숨긴다 — 순서를
+            // 바꾸면(먼저 숨기고 나중에 렌더) render()가 실패했을 때 손님이 옵션을
+            // 아예 고를 수 없는 상태로 남는다. 필수 DOM/이벤트는 삭제하지 않는다.
+            // "테이블의 첫 tr"이 아니라 select를 직접 감싼 tr을 찾는다 — 모바일
+            // 스킨은 옵션 테이블 앞에 배송(국내/해외) 선택 행이 하나 더 있어서,
+            // 위치 기반으로 찾으면 엉뚱한 행을 숨기게 된다(실제 모바일 스킨
+            // 템플릿 확인으로 발견).
+            var optionRow = select.closest("tr");
+            if (optionRow) optionRow.classList.add("optionPickerNativeRow");
+
+            observeSelectedList();
+        } catch (err) {
+            logError("초기화 중 오류가 발생해 네이티브 옵션을 그대로 사용합니다.", err);
+            revertToNative();
+        }
+    }
+
+    // 순수 로직(파싱/매칭)만 Node 테스트(test/option-picker.test.js)에서 실행할 수 있도록
+    // 노출한다. 브라우저에서는 module이 없으므로 이 블록은 실행되지 않는다.
+    if (typeof module !== "undefined" && module.exports) {
+        module.exports = {
+            parseTierAndSuffix: parseTierAndSuffix,
+            parsePriceText: parsePriceText,
+            parseTiersFromSelect: parseTiersFromSelect,
+            rowMatchesVariant: rowMatchesVariant,
+            triggerNativeSelect: triggerNativeSelect,
+            findOptionButtonLink: findOptionButtonLink
+        };
+    }
+
+    // document가 없는 환경(Node 테스트)에서는 초기화를 실행하지 않는다.
+    if (typeof document !== "undefined") {
+        ready(init);
+    }
+})();
+
+            </script>
+        </div>
+
+        <!--@import(/coupon/coupon_productdetail.html)-->
+
+        <div class="sizeGuide {$size_guide_display|display}">
+            <a href="#none" class="{$size_guide_class}" product_no="{$product_no}">사이즈 가이드</a>
+        </div>
+
+
+        <div class="productSet ec-base-fold theme1 selected eToggle" module="product_setproduct">
+            <!--
+            $use_per_add_option = yes
+            -->
+            <div class="title">
+                <h2>세트상품</h2>
+            </div>
+            <div class="contents">
+                <ul class="product">
+                    <li>
+                        <div class="information">
+                            <div class="thumbnail"><a href="/product/detail.html?product_no={$product_no}"><img src="{$product_image}" alt="" id="{$image_id}"></a></div>
+                            <p class="name">{$product_name} <span class="qty {$set_quantity_display|display}">({$set_quantity}개씩 구매되는 상품)</span></p>
+                            <p class="price {$product_price_del}">{$product_price}<span id="span_product_tax_type_text">{$product_tax_type_text}</span></p>
+                            <p class="salePrice {$product_sale_price_display|display}">{$product_sale_price}</p>
+                            <div class="stock">
+                                <span class="ec-base-label {$stock_quantity_display|display}"><a href="#none" class="btnNormal mini" {$bind_stock_quantity}>재고수량보기</a></span>
+                                <span class="{$product_restock_button_display|display}"><a href="#none" class="btnNormal mini" {$product_restock_link}>재입고 알림 SMS</a></span>
+                            </div>
+                        </div>
+                        <div class="option">
+                            <table border="1" summary="">
+                            <caption>옵션 정보</caption>
+                            <colgroup>
+                                <col style="width:105px;">
+                                <col style="width:auto;">
+                            </colgroup>
+
+                            <tbody module="product_option">
+                                <tr>
+                                    <th scope="row">{$option_name}</th>
+                                    <td>{$form.option}<p class="value">{$option_desc}</p></td>
+                                </tr>
+                                <tr module="product_quantity" class="quantity">
+                                    <th scope="row">수량</th>
+                                    <td>
+                                        <div class="ec-base-qty">
+                                            <a href="javascript:;" class="qtyDown eClearDown"><img id="{$quantity_down_id}" class="{$quantity_down_class}" alt="down" src="//img.echosting.cafe24.com/skin/mobile/common/ico_quantity_down.jpg" width="33" height="29"></a>
+                                            {$form.quantity}
+                                            <a href="javascript:;" class="qtyUp eClearUp"><img id="{$quantity_up_id}" class="{$quantity_up_class}" alt="up" src="//img.echosting.cafe24.com/skin/mobile/common/ico_quantity_up.jpg" width="33" height="29"></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody module="product_noneoption">
+                                <tr>
+                                    <th scope="row">상품선택</th>
+                                    <td>{$form.noneoption}</td>
+                                </tr>
+                                <tr module="product_quantity" class="quantity">
+                                    <th scope="row">수량</th>
+                                    <td>
+                                        <div class="ec-base-qty">
+                                            <a href="javascript:;" class="qtyDown eClearDown"><img id="{$quantity_down_id}" class="{$quantity_down_class}" alt="down" src="//img.echosting.cafe24.com/skin/mobile/common/ico_quantity_down.jpg" width="33" height="29"></a>
+                                            {$form.quantity}
+                                            <a href="javascript:;" class="qtyUp eClearUp"><img id="{$quantity_up_id}" class="{$quantity_up_class}" alt="up" src="//img.echosting.cafe24.com/skin/mobile/common/ico_quantity_up.jpg" width="33" height="29"></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                                <tr module="product_addoption">
+                                    <th scope="row">{$add_option_name}</th>
+                                    <td>
+                                        {$form.add_option}
+                                        <span class="byte" title="현재글자수/최대글자수">[ <strong class="length">0</strong> / {$option_maxlength} ]</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            </table>
+                        </div>
+                        <div class="selectButton {$add_option_push_button_display|display}" id="{$add_option_push_button_id}"><button type="button" class="btnStrong" onclick="{$add_action_push_button}">옵션 선택</button></div>
+                        <div class="description eToggle" id="eDescriptionToggle_{$product_no}">
+                            <div class="ec-base-button gCenter"><button type="button" class="btnBasic icoToggle eProductDetailInfo" id="eProductDetailInfo_{$product_no}"><span>상품 추가정보 보기</span></button></div>
+                            <div class="inner" id="product_description_{$product_no}"></div>
+                        </div>
+                        <div class="sizeGuide {$size_guide_display|display}"><a href="#none" class="{$size_guide_class}" product_no="{$product_no}">사이즈 가이드</a></div>
+                    </li>
+                    <li>
+                        <div class="information">
+                            <div class="thumbnail"><a href="/product/detail.html?product_no={$product_no}"><img src="{$product_image}" alt="" id="{$image_id}"></a></div>
+                            <p class="name">{$product_name} <span class="qty {$set_quantity_display|display}">({$set_quantity}개씩 구매되는 상품)</span></p>
+                            <p class="price {$product_price_del}">{$product_price}<span id="span_product_tax_type_text">{$product_tax_type_text}</span></p>
+                            <p class="salePrice {$product_sale_price_display|display}">{$product_sale_price}</p>
+                            <div class="stock">
+                                <span class="ec-base-label {$stock_quantity_display|display}"><a href="#none" class="btnNormal mini" {$bind_stock_quantity}>재고수량보기</a></span>
+                                <span class="{$product_restock_button_display|display}"><a href="#none" class="btnNormal mini" {$product_restock_link}>재입고 알림 SMS</a></span>
+                            </div>
+                        </div>
+                        <div class="option">
+                            <table border="1" summary="">
+                            <caption>옵션 정보</caption>
+                            <colgroup>
+                                <col style="width:105px;">
+                                <col style="width:auto;">
+                            </colgroup>
+
+                            <tbody module="product_option">
+                                <tr>
+                                    <th scope="row">{$option_name}</th>
+                                    <td>{$form.option}<p class="value">{$option_desc}</p></td>
+                                </tr>
+                                <tr module="product_quantity" class="quantity">
+                                    <th scope="row">수량</th>
+                                    <td>
+                                       <div class="ec-base-qty">
+                                            <a href="javascript:;" class="qtyDown eClearDown"><img id="{$quantity_down_id}" class="{$quantity_down_class}" alt="down" src="//img.echosting.cafe24.com/skin/mobile/common/ico_quantity_down.jpg" width="33" height="29"></a>
+                                            {$form.quantity}
+                                            <a href="javascript:;" class="qtyUp eClearUp"><img id="{$quantity_up_id}" class="{$quantity_up_class}" alt="up" src="//img.echosting.cafe24.com/skin/mobile/common/ico_quantity_up.jpg" width="33" height="29"></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody module="product_noneoption">
+                                <tr>
+                                    <th scope="row">상품선택</th>
+                                    <td>{$form.noneoption}</td>
+                                </tr>
+                                <tr module="product_quantity" class="quantity">
+                                    <th scope="row">수량</th>
+                                    <td>
+                                        <div class="ec-base-qty">
+                                            <a href="javascript:;" class="qtyDown eClearDown"><img id="{$quantity_down_id}" class="{$quantity_down_class}" alt="down" src="//img.echosting.cafe24.com/skin/mobile/common/ico_quantity_down.jpg" width="33" height="29"></a>
+                                            {$form.quantity}
+                                            <a href="javascript:;" class="qtyUp eClearUp"><img id="{$quantity_up_id}" class="{$quantity_up_class}" alt="up" src="//img.echosting.cafe24.com/skin/mobile/common/ico_quantity_up.jpg" width="33" height="29"></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                                <tr module="product_addoption">
+                                    <th scope="row">{$add_option_name}</th>
+                                    <td>
+                                        {$form.add_option}
+                                        <span class="byte" title="현재글자수/최대글자수">[ <strong class="length">0</strong> / {$option_maxlength} ]</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            </table>
+                        </div>
+                        <div class="selectButton {$add_option_push_button_display|display}" id="{$add_option_push_button_id}"><button type="button" class="btnStrong" onclick="{$add_action_push_button}">옵션 선택</button></div>
+                        <div class="description eToggle" id="eDescriptionToggle_{$product_no}">
+                            <div class="ec-base-button gCenter"><button type="button" class="btnBasic icoToggle eProductDetailInfo" id="eProductDetailInfo_{$product_no}"><span>상품 추가정보 보기</span></button></div>
+                            <div class="inner" id="product_description_{$product_no}"></div>
+                        </div>
+                        <div class="sizeGuide {$size_guide_display|display}"><a href="#none" class="{$size_guide_class}" product_no="{$product_no}">사이즈 가이드</a></div>
+                    </li>
+                </ul>
+                <dl module="product_quantity" class="quantity set">
+                    <dt>수량</dt>
+                    <dd>
+                        <div class="ec-base-qty">
+                            <a href="javascript:;" class="qtyDown eClearDown"><img id="{$quantity_down_id}" class="{$quantity_down_class}" alt="down" src="//img.echosting.cafe24.com/skin/mobile/common/ico_quantity_down.jpg" width="33" height="29"></a>
+                            {$form.quantity}
+                            <a href="javascript:;" class="qtyUp eClearUp"><img id="{$quantity_up_id}" class="{$quantity_up_class}" alt="up" src="//img.echosting.cafe24.com/skin/mobile/common/ico_quantity_up.jpg" width="33" height="29"></a>
+                        </div>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
+
+        <div class="productSet ec-base-fold theme1 selected eToggle" module="product_addproduct">
+            <!--
+            $use_per_add_option = yes
+            -->
+            <div class="title">
+                <h2>추가구성상품</h2>
+            </div>
+            <div class="contents">
+                <ul class="product">
+                    <li>
+                        <div class="information">
+                            <div class="thumbnail"><a href="/product/detail.html?product_no={$product_no}"><img src="{$product_image}" alt="" id="{$image_id}"></a></div>
+                            <p class="name">{$product_name}</p>
+                            <p class="price {$product_price_del}">{$product_price}<span id="span_product_tax_type_text">{$product_tax_type_text}</span></p>
+                            <p class="salePrice {$product_sale_price_display|display}">{$product_sale_price}</p>
+                        </div>
+                        <div class="option">
+                            <table border="1" summary="">
+                            <caption>옵션 정보</caption>
+                            <colgroup>
+                                <col style="width:105px;">
+                                <col style="width:auto;">
+                            </colgroup>
+
+                            <tbody module="product_option">
+                                <tr>
+                                    <th scope="row">{$option_name}</th>
+                                    <td>{$form.option}<p class="value">{$option_desc}</p></td>
+                                </tr>
+                                <tr module="product_quantity" class="quantity">
+                                    <th scope="row">수량</th>
+                                    <td>
+                                       <div class="ec-base-qty">
+                                            <a href="javascript:;" class="qtyDown eClearDown"><img id="{$quantity_down_id}" class="{$quantity_down_class}" alt="down" src="//img.echosting.cafe24.com/skin/mobile/common/ico_quantity_down.jpg" width="33" height="29"></a>
+                                            {$form.quantity}
+                                            <a href="javascript:;" class="qtyUp eClearUp"><img id="{$quantity_up_id}" class="{$quantity_up_class}" alt="up" src="//img.echosting.cafe24.com/skin/mobile/common/ico_quantity_up.jpg" width="33" height="29"></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody module="product_noneoption">
+                                <tr>
+                                    <th scope="row">상품선택</th>
+                                    <td>{$form.noneoption}</td>
+                                </tr>
+                                <tr module="product_quantity" class="quantity">
+                                    <th scope="row">수량</th>
+                                    <td>
+                                        <div class="ec-base-qty">
+                                            <a href="javascript:;" class="qtyDown eClearDown"><img id="{$quantity_down_id}" class="{$quantity_down_class}" alt="down" src="//img.echosting.cafe24.com/skin/mobile/common/ico_quantity_down.jpg" width="33" height="29"></a>
+                                            {$form.quantity}
+                                            <a href="javascript:;" class="qtyUp eClearUp"><img id="{$quantity_up_id}" class="{$quantity_up_class}" alt="up" src="//img.echosting.cafe24.com/skin/mobile/common/ico_quantity_up.jpg" width="33" height="29"></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                                <tr module="product_addoption">
+                                    <th scope="row">{$add_option_name}</th>
+                                    <td>
+                                        {$form.add_option}
+                                        <span class="byte" title="현재글자수/최대글자수">[ <strong class="length">0</strong> / {$option_maxlength} ]</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            </table>
+                        </div>
+                       <div class="selectButton {$add_option_push_button_display|display}" id="{$add_option_push_button_id}"><button type="button" class="btnStrong" onclick="{$add_action_push_button}">옵션 선택</button></div>
+                    </li>
+                    <li>
+                        <div class="information">
+                            <div class="thumbnail"><a href="/product/detail.html?product_no={$product_no}"><img src="{$product_image}" alt="" id="{$image_id}"></a></div>
+                            <p class="name">{$product_name}</p>
+                            <p class="price {$product_price_del}">{$product_price}<span id="span_product_tax_type_text">{$product_tax_type_text}</span></p>
+                            <p class="salePrice {$product_sale_price_display|display}">{$product_sale_price}</p>
+                        </div>
+                        <div class="option">
+                           <table border="1" summary="">
+                            <caption>옵션 정보</caption>
+                            <colgroup>
+                                <col style="width:105px;">
+                                <col style="width:auto;">
+                            </colgroup>
+
+                            <tbody module="product_option">
+                                <tr>
+                                    <th scope="row">{$option_name}</th>
+                                    <td>{$form.option}<p class="value">{$option_desc}</p></td>
+                                </tr>
+                                <tr module="product_quantity" class="quantity">
+                                    <th scope="row">수량</th>
+                                    <td>
+                                        <div class="ec-base-qty">
+                                            <a href="javascript:;" class="qtyDown eClearDown"><img id="{$quantity_down_id}" class="{$quantity_down_class}" alt="down" src="//img.echosting.cafe24.com/skin/mobile/common/ico_quantity_down.jpg" width="33" height="29"></a>
+                                            {$form.quantity}
+                                            <a href="javascript:;" class="qtyUp eClearUp"><img id="{$quantity_up_id}" class="{$quantity_up_class}" alt="up" src="//img.echosting.cafe24.com/skin/mobile/common/ico_quantity_up.jpg" width="33" height="29"></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody module="product_noneoption">
+                                <tr>
+                                    <th scope="row">상품선택</th>
+                                    <td>{$form.noneoption}</td>
+                                </tr>
+                                <tr module="product_quantity" class="quantity">
+                                    <th scope="row">수량</th>
+                                    <td>
+                                        <div class="ec-base-qty">
+                                            <a href="javascript:;" class="qtyDown eClearDown"><img id="{$quantity_down_id}" class="{$quantity_down_class}" alt="down" src="//img.echosting.cafe24.com/skin/mobile/common/ico_quantity_down.jpg" width="33" height="29"></a>
+                                            {$form.quantity}
+                                            <a href="javascript:;" class="qtyUp eClearUp"><img id="{$quantity_up_id}" class="{$quantity_up_class}" alt="up" src="//img.echosting.cafe24.com/skin/mobile/common/ico_quantity_up.jpg" width="33" height="29"></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                                <tr module="product_addoption">
+                                    <th scope="row">{$add_option_name}</th>
+                                    <td>
+                                        {$form.add_option}
+                                        <span class="byte" title="현재글자수/최대글자수">[ <strong class="length">0</strong> / {$option_maxlength} ]</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            </table>
+                        </div>
+                       <div class="selectButton {$add_option_push_button_display|display}" id="{$add_option_push_button_id}"><button type="button" class="btnStrong" onclick="{$add_action_push_button}">옵션 선택</button></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="{$total.total_id}" class="{$total.total_display|display}">
+            <table border="1" summary="">
+                <caption>상품 목록</caption>
+                <colgroup>
+                    <col style="width:auto;">
+                    <col style="width:100px;">
+                    <col style="width:35px;">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th scope="col">상품 정보</th>
+                        <th scope="col">가격</th>
+                        <th scope="col">삭제</th>
+                    </tr>
+                </thead>
+                <!-- 옵션선택 또는 세트상품 선택시 상품이 추가되는 영역입니다. 쇼핑몰 화면에는 아래와 같은 마크업구조로 표시됩니다. 삭제시 기능이 정상동작 하지 않습니다. -->
+                <tbody>
+                    <!-- 상품 목록 -->
+                </tbody>
+                <!-- // 옵션선택 또는 세트상품 선택시 상품이 추가되는 영역입니다. 쇼핑몰 화면에는 아래와 같은 마크업구조로 표시됩니다. 삭제시 기능이 정상동작 하지 않습니다. -->
+            </table>
+        </div>
+        <div id="{$total.total_price_id}" class="totalPrice">
+            <p class="ec-base-help txtWarn txt11 {$exclusive_purchase_olny|display}"> 단독구매상품</p>
+            <strong>총상품금액(수량)</strong> <span class="{$total.total_cnt}"><strong class="price">0</strong></span>
+        </div>
+        <p class="ec-base-help {$price_warning_class}">할인가가 적용된 최종 결제예정금액은 주문 시 확인할 수 있습니다.</p>
+
+
+
+        <div module="product_action" id="{$fixed_action_button}">
+            <div class="ec-base-button gColumn {$action_display|display}">
+                <button type="button" class="btnNormal {$basket_display|display}" onclick="{$action_basket}" id="actionCart">장바구니</button>
+                <button type="button" class="btnNormal {$wishlist_display|display}" onclick="{$action_wishlist}" id="actionWish">관심상품</button>
+                <a href="#none" class="btnStrong {$buy_display|display}" onclick="{$action_buy}"><span id="{$btn_buy_mobile_id}">구매하기</span><span class="{$btn_reserve_class|display}" id="{$btn_reserve_mobile_id}">예약주문</span><span id="{$btn_regular_delivery_id}" class="{$btn_regular_delivery|display}">정기배송 신청하기</span></a>
+            </div>
+            <div class="ec-base-button gColumn soldout {$action_soldout_display|display}">
+                <button type="button" class="btnStrong {$soldout_display|display}">SOLD OUT</button>
+                <button type="button" class="btnNormal {$wishlist_display|display}" onclick="{$action_wishlist}" id="actionWishSoldout">관심상품</button>
+            </div>
+            <!-- 네이버 체크아웃 구매 버튼  -->
+            <div id="NaverChk_Button" style="display:none;"></div>
+            <!-- 상품상세페이지에 추가되는 앱 관련 결제버튼's div -->
+            <div id="{$app_payment_button_box_id}"></div>
+        </div>
+
+        <div module="product_action" class="ec-base-button gFixed" id="orderFixArea">
+            <div class="ec-base-button gColumn {$action_display|display}">
+                <button type="button" class="btnNormal {$basket_display|display}" id="actionCartClone">장바구니</button>
+                <button type="button" class="btnNormal {$wishlist_display|display}" id="actionWishClone">관심상품</button>
+                <a href="#none" class="btnStrong {$buy_display|display}"><span id="{$btn_buy_mobile_clone_id}">구매하기</span><span class="{$btn_reserve_class|display}" id="{$btn_reserve_mobile_clone_id}">예약주문</span><span id="{$btn_regular_delivery_clone_id}" class="{$btn_regular_delivery|display}">정기배송 신청하기</span></a>
+            </div>
+            <div class="ec-base-button gColumn {$action_soldout_display|display}">
+                <button type="button" class="btnStrong {$soldout_display|display}">SOLD OUT</button>
+                <button type="button" class="btnNormal {$wishlist_display|display}" id="actionWishSoldoutClone">관심상품</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div module="product_additional">
+    <!--@import(/board/report_popup.html)-->
+    <!--@css(/css/module/product/additional.css)-->
+    <!--@css(/css/module/product/additional_animation.css)-->
+
+    <div id="tabProduct" class="ec-base-tab">
+        <ul>
+            <li class="selected"><a href="#prdDetail" target="_self">상세정보</a></li>
+            <li><a href="#prdInfo">구매안내</a></li>
+            <li class="{$review_display|display}"><a href="#prdReview" name="use_review">상품후기</a></li>
+            <li class="{$qna_display|display}"><a href="#prdQnA" name="use_qna">Q&amp;A</a></li>
+        </ul>
+    </div>
+
+    <div id="prdDetail">
+        <div class="button" id="prdDetailBtn">
+            <a href="/product/zoom.html?product_no={$product_no}" class="btnNormal">원본보기 <span class="ico"></span></a>
+        </div>
+        <div id="prdDetailContent">{$product_detail}</div>
+    </div>
+
+    <div id="prdInfo">
+        <div module="product_detaildesign">
+            <!--@css(/css/module/product/detaildesign.css)-->
+            <!--
+                $cache = no
+            -->
+            <div class="ec-base-table">
+                <table border="1">
+                    <caption>상품 상세 정보</caption>
+                    <colgroup>
+                        <col style="width:100px;">
+                        <col style="width:auto;">
+                    </colgroup>
+                    <tbody>
+                        <tr class="{$item_display|display}">
+                            <th>{$item_title}</th>
+                            <td>{$item_content}</td>
+                        </tr>
+                        <tr class="{$item_display|display}">
+                            <th>{$item_title}</th>
+                            <td>{$item_content}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="faq">
+            <div class="toggle eToggle selected {$payment_info|display}">
+                <div class="title">
+                    <h3>결제 안내</h3>
+                </div>
+                <div class="contents">
+                    {$payment_info}
+                </div>
+            </div>
+            <div class="toggle eToggle selected {$shipping_info|display}">
+                <div class="title">
+                    <h3>배송 안내</h3>
+                </div>
+                <div class="contents">
+                    <ul>
+                        <li>배송 방법 : {$shipping_method}</li>
+                        <li>배송 지역 : {$shipping_area}</li>
+                        <li>배송 비용 : {$shipping_fee}</li>
+                        <li>배송 기간 : {$shipping_period}</li>
+                        <li>배송 안내 : {$shipping_info}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="toggle eToggle selected {$exchange_info|display}">
+                <div class="title">
+                    <h3>교환/반품 안내</h3>
+                </div>
+                <div class="contents">
+                    {$exchange_info}
+                </div>
+            </div>
+            <div class="toggle eToggle selected {$service_info|display}">
+                <div class="title">
+                    <h3>서비스문의 안내</h3>
+                </div>
+                <div class="contents">
+                    {$service_info}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="prdReview" class="{$review_display|display}">
+        <div class="board">
+            <h3>상품사용후기</h3>
+            <div class="ec-base-button gColumn">
+                <a href="{$review_write}" class="btnSubmit">상품후기쓰기</a>
+                <a href="{$review_list}" class="btnEm">모두보기</a>
+            </div>
+
+            <a name="use_review"></a>
+
+            <div module="product_review">
+                <!--@css(/css/module/product/review.css)-->
+                <!--@js(/js/module/product/review.js)-->
+                <!--
+                    $count = 5
+                -->
+
+                <p class="noAccess {$deny_display|display}">글읽기 권한이 없습니다.</p>
+
+                <div class="minor {$adult_display|display}">
+                    <p><span>19세 미만의 미성년자</span>는 출입을 금합니다.</p>
+                    <a class="btnBasic" href="/intro/board.html{$returnParam}">성인인증하기</a>
+                </div>
+
+                <ul class="board {$list_display|display}">
+                    <li class="{$block_target_class}" {$block_data_attr}>
+                        <p class="descriptions">
+                            <a href="/product/provider/review_read.xml{$param_read}">
+                                <strong class="summary {$block_content_class}">{$icon_re} {$icon_lock} {$icon_mobile} {$subject} <span class="commentCnt">{$comment_count}</span> {$icon_hit} {$icon_file} {$icon_new}</strong>
+                                <span class="id" title="작성자">{$writer}</span>
+                                <span class="date {$date_display|display}" title="작성일">{$write_date}</span>
+                                <span class="{$hit_display|display}">조회 {$hit_count}</span>
+                                <span class="{$vote_display|display}">추천 {$vote}</span>
+                                <span class="point {$use_point_display|display}"><img src="//img.echosting.cafe24.com/skin/mobile_ko_KR/board/ico_star{$point_count}.png" alt="{$point_count}점" width="50" height="8"></span>
+                            </a>
+                        </p>
+                    </li>
+                    <li class="{$block_target_class}" {$block_data_attr}>
+                        <p class="descriptions">
+                            <a href="/product/provider/review_read.xml{$param_read}">
+                                <strong class="summary {$block_content_class}">{$icon_re} {$icon_lock} {$icon_mobile} {$subject} <span class="commentCnt">{$comment_count}</span> {$icon_hit} {$icon_file} {$icon_new}</strong>
+                                <span class="id" title="작성자">{$writer}</span>
+                                <span class="date {$date_display|display}" title="작성일">{$write_date}</span>
+                                <span class="{$hit_display|display}">조회 {$hit_count}</span>
+                                <span class="{$vote_display|display}">추천 {$vote}</span>
+                                <span class="point {$use_point_display|display}"><img src="//img.echosting.cafe24.com/skin/mobile_ko_KR/board/ico_star{$point_count}.png" alt="{$point_count}점" width="50" height="8"></span>
+                            </a>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+
+            <div module="product_reviewpaging" class="ec-base-paginate typeList">
+                <a href="{$param_before}" class="btnPrev">이전 페이지</a>
+                <ol>
+                    <li><a href="{$param}" class="{$param_class}">{$no}</a></li>
+                    <li><a href="{$param}" class="{$param_class}">{$no}</a></li>
+                    <li><a href="{$param}" class="{$param_class}">{$no}</a></li>
+                    <li><a href="{$param}" class="{$param_class}">{$no}</a></li>
+                    <li><a href="{$param}" class="{$param_class}">{$no}</a></li>
+                </ol>
+                <a href="{$param_next}" class="btnNext">다음 페이지</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="prdQnA" class="{$qna_display|display}">
+        <div class="board">
+            <h3>상품 Q&amp;A</h3>
+
+            <div class="ec-base-button gColumn">
+                <a href="{$qna_write}" class="btnSubmit">상품문의하기</a>
+                <a href="{$qna_list}" class="btnEm">모두보기</a>
+            </div>
+
+            <a name="use_review"></a>
+
+            <div module="product_qna">
+                <!--@css(/css/module/product/qna.css)-->
+                <!--@js(/js/module/product/qna.js)-->
+                <!--
+                    $count = 5
+                -->
+
+                <p class="noAccess {$deny_display|display}">글읽기 권한이 없습니다.</p>
+
+                <div class="minor {$adult_display|display}">
+                    <p><span>19세 미만의 미성년자</span>는 출입을 금합니다.</p>
+                    <a class="btnBasic" href="/intro/board.html{$returnParam}">성인인증하기</a>
+                </div>
+
+                <ul class="board {$list_display|display}">
+                    <li class="{$block_target_class}" {$block_data_attr}>
+                        <p class="descriptions">
+                            <a href="/board/product/read.html{$param_read}">
+                                <strong class="summary {$block_content_class}">{$icon_re} {$icon_lock} {$icon_mobile} {$subject} <span class="commentCnt">{$comment_count}</span> {$icon_hit} {$icon_file} {$icon_new}</strong>
+                                <span class="id" title="작성자">{$writer}</span>
+                                <span class="date {$date_display|display}" title="작성일">{$write_date}</span>
+                                <span class="{$hit_display|display}">조회 {$hit_count}</span>
+                                <span class="{$vote_display|display}">추천 {$vote}</span>
+                                <span class="point {$use_point_display|display}"><img src="//img.echosting.cafe24.com/skin/mobile_ko_KR/board/ico_star{$point_count}.png" alt="{$point_count}점" width="50" height="8"></span>
+                            </a>
+                        </p>
+                    </li>
+                    <li class="{$block_target_class}" {$block_data_attr}>
+                        <p class="descriptions">
+                            <a href="/board/product/read.html{$param_read}">
+                                <strong class="summary {$block_content_class}">{$icon_re} {$icon_lock} {$icon_mobile} {$subject} <span class="commentCnt">{$comment_count}</span> {$icon_hit} {$icon_file} {$icon_new}</strong>
+                                <span class="id" title="작성자">{$writer}</span>
+                                <span class="date {$date_display|display}" title="작성일">{$write_date}</span>
+                                <span class="{$hit_display|display}">조회 {$hit_count}</span>
+                                <span class="{$vote_display|display}">추천 {$vote}</span>
+                                <span class="point {$use_point_display|display}"><img src="//img.echosting.cafe24.com/skin/mobile_ko_KR/board/ico_star{$point_count}.png" alt="{$point_count}점" width="50" height="8"></span>
+                            </a>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+            <div module="product_qnapaging" class="ec-base-paginate typeList">
+                <a href="{$param_before}" class="btnPrev">이전 페이지</a>
+                <ol>
+                    <li><a href="{$param}" class="{$param_class}">{$no}</a></li>
+                    <li><a href="{$param}" class="{$param_class}">{$no}</a></li>
+                    <li><a href="{$param}" class="{$param_class}">{$no}</a></li>
+                    <li><a href="{$param}" class="{$param_class}">{$no}</a></li>
+                    <li><a href="{$param}" class="{$param_class}">{$no}</a></li>
+                </ol>
+                <a href="{$param_next}" class="btnNext">다음 페이지</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="supplyInfo {$supply_info_display|display}">
+        <h3 module="product_headcategory">판매자 정보</h3>
+        <div class="{$supply_info_display|display}">
+            {$supply_info}
+        </div>
+    </div>
+</div>
+
+<div module="product_relation">
+    <!--@css(/css/module/product/relation_swipe.css)-->
+    <!--
+        $count = 3
+        $swipe = no
+        $line = 1
+        $grid = 3
+    -->
+    <h2>관련상품</h2>
+    <ul class="grid3" module="product_relationlist">
+        <li class="item">
+            <div class="thumbnail"><a href="{$link_product_detail}"><img src="{$img_small}" alt="{$seo_alt_tag}" class="thumb" /></a></div>
+            <div class="information">
+                <p class="name"><a href="{$link_product_detail}">{$name}</a></p>
+                <p class="price {$product_sale_strike}">{$disp_product_price}{$product_tax_type_text}</p>
+                <p class="price {$sale_price_display|display}">{$disp_sale_price}</p>
+            </div>
+        </li>
+        <li class="item">
+            <div class="thumbnail"><a href="{$link_product_detail}"><img src="{$img_small}" alt="{$seo_alt_tag}" class="thumb" /></a></div>
+            <div class="information">
+                <p class="name"><a href="{$link_product_detail}">{$name}</a></p>
+                <p class="price {$product_sale_strike}">{$disp_product_price}{$product_tax_type_text}</p>
+                <p class="price {$sale_price_display|display}">{$disp_sale_price}</p>
+            </div>
+        </li>
+    </ul>
+</div>
